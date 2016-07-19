@@ -16,6 +16,7 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 	private MainPanel mainPanel;
 	private JTabbedPane Tab;// add
 
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
