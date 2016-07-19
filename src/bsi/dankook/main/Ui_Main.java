@@ -1,18 +1,26 @@
 package bsi.dankook.main;
 
+import bsi.dankook.views.*;
+import bsi.dankook.util.Ui_Model;
+import bsi.dankook.util.Ui_Observer;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
-public class EDI_Main extends JFrame {
+public class Ui_Main extends JFrame implements Ui_Observer {
 	private static final long serialVersionUID = 1L;
-	private JPanel mainPanel;
+	private Ui_Model _model;
+	private MainPanel mainPanel;
 	private JTabbedPane Tab;// add
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EDI_Main frame = new EDI_Main();
+					Ui_Main frame = new Ui_Main();
 					frame.setTitle("ECO2 Simulator");
 					frame.setDefaultCloseOperation(3);
 					frame.setSize(700, 700);
@@ -24,18 +32,20 @@ public class EDI_Main extends JFrame {
 		});
 	}
 
-	public EDI_Main() {
+	public Ui_Main() {
+		
+		_model = new Ui_Model();
+		mainPanel = new MainPanel(this._model);
 
-		setLayout(null);
+		add(mainPanel);
 		setMenuBar();
-
 	}
 	
 	public void setMenuBar() {
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 794, 21);
-		add(menuBar);
+		mainPanel.add(menuBar);
 
 		JMenu mnhelp = new JMenu("Help");
 		mnhelp.setActionCommand("Help");
@@ -43,6 +53,12 @@ public class EDI_Main extends JFrame {
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("About");
 		mnhelp.add(mntmNewMenuItem);
+		
+	}
+
+	@Override
+	public void update(Object paramObject) {
+		// TODO Auto-generated method stub
 		
 	}
 }
