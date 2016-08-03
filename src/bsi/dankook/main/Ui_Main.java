@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class Ui_Main extends JFrame implements Ui_Observer {
+	
 	private static final long serialVersionUID = 1L;
 	private Ui_Model _model;
 	private MainPanel mainPanel;
@@ -32,7 +33,6 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 		});
 	}
 	
-
 	public Ui_Main() {
 		
 		_model = new Ui_Model();

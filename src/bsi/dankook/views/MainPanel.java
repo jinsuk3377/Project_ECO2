@@ -19,65 +19,79 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	private LoadGbXml_Panel loadGbXmlPanel;
-	private GbXmltoBIX gbxmltoBIX = new GbXmltoBIX();
+	private InfoGbXml_Panel infoGbXmlPanel;
+	//private GbXmltoBIX gbxmltoBIX = new GbXmltoBIX();
 	
-	private JTextField gbxmlFilePathField;
-	public final JButton generateBIXButton = new JButton("Generate");
-	public final JButton nextButton = new JButton("Next >>");
+	public final JButton simulationButton = new JButton("Simulation");
 
 	private Ui_Model _model = null;
-	
-	private JFrame hvacDialog;
 
 	public MainPanel(Ui_Model model) {
 		this._model = model;
 
-		this.loadGbXmlPanel = new LoadGbXml_Panel();
-		this.loadGbXmlPanel.setSize(660, 95);
-		this.loadGbXmlPanel.setToolTipText("");
-		this.loadGbXmlPanel.setModel(model);
-		this.loadGbXmlPanel.setLocation(10, 35);
-		add(this.loadGbXmlPanel);
-
-		createBIXGenerationPanel();
-		createNextButton();
+		createLoadGbXmlPanel();
+		createSimulationButton();
+		createInfoGbXmlPanel();
+		
 		setLayout(null);
 		setSize(800, 800);
 
 		refreshView();
 	}
-
-	private void createBIXGenerationPanel() {
-		/* 99 */JLabel idfFilePathLabel = new JLabel("BIX File Path :");
-		/* 100 */idfFilePathLabel.setBounds(12, 580, 89, 21);
-		/* 101 */add(idfFilePathLabel);
-
-		/* 103 */this.gbxmlFilePathField = new JTextField();
-		/* 104 */this.gbxmlFilePathField.setEditable(false);
-		/* 105 */this.gbxmlFilePathField.setBounds(105, 580, 415, 21);
-		/* 106 */this.gbxmlFilePathField.setColumns(10);
-		/* 107 */add(this.gbxmlFilePathField);
-
-		/* 109 */this.generateBIXButton.setFont(new Font("Consolas", 0, 13));
-		/* 110 */this.generateBIXButton.setBounds(535, 580, 132, 28);
-		/* 111 */this.generateBIXButton.addActionListener(this);
-		/* 112 */add(this.generateBIXButton);
+	
+	private void createLoadGbXmlPanel() {
+		loadGbXmlPanel = new LoadGbXml_Panel();
+		loadGbXmlPanel.setSize(660, 95);
+		loadGbXmlPanel.setToolTipText("");
+		loadGbXmlPanel.setModel(_model);
+		loadGbXmlPanel.setLocation(10, 35);
+		add(loadGbXmlPanel);
 	}
 	
-	private void createNextButton() {
-		/* 76 */this.nextButton.setForeground(SystemColor.desktop);
-		/* 77 */this.nextButton.setFont(new Font("Consolas", 0, 13));
-		/* 78 */this.nextButton.setBounds(535, 615, 132, 28);
-		/* 79 */this.nextButton.addActionListener(this);
-		/* 80 */add(this.nextButton);
+	private void createInfoGbXmlPanel() {
+		infoGbXmlPanel = new InfoGbXml_Panel();
+		infoGbXmlPanel.setSize(660, 450);
+		infoGbXmlPanel.setToolTipText("");
+		infoGbXmlPanel.setModel(_model);
+		infoGbXmlPanel.setLocation(10, 150);
+		add(infoGbXmlPanel);
+	}
+	
+	private void createSimulationButton() {
+		simulationButton.setForeground(SystemColor.desktop);
+		simulationButton.setFont(new Font("Consolas", 0, 13));
+		simulationButton.setBounds(535, 615, 132, 28);
+		simulationButton.addActionListener(this);
+		add(simulationButton);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(this.generateBIXButton)) {
-			convert();
+		
+	}
+
+	public void update(Object eventDispatcher) {
+		refreshView();
+	}
+
+	private void refreshView() {
+		if (this._model != null) {
+			updateSimulationButton();
 		}
 	}
 
+	private void updateSimulationButton() {
+		
+	}
+
+	/*
+	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource().equals(this.generateBIXButton)) {
+			convert();
+		}
+		
+	}
+	
 	private void convert() {
 		
 		gbxmltoBIX.setPath(_model.getGbxmlFilePath());
@@ -90,33 +104,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
             }
         }
         _model.setBIXFilePath(_model.getGbxmlFilePath().substring(0, rightPosition));
-		this.gbxmlFilePathField.setText(_model.getBIXFilePath());
 	}
-
-	public void update(Object eventDispatcher) {
-		refreshView();
-	}
-
-	private void refreshView() {
-		if (this._model != null) {
-			updateGenerateButton();
-			updateNextButton();
-		}
-	}
-
-	private void updateGenerateButton() {
-		if (this._model.loadedGbxmlFile()) {
-			this.generateBIXButton.setEnabled(true);
-		} else
-			this.generateBIXButton.setEnabled(false);
-	}
-
-	private void updateNextButton() {
-	}
-
+	*/
+	
 }
-
-/*
- * Location: C:\Users\LG\workspace\Django-server\EDI.jar Qualified Name:
- * bsi.dankook.edi.views.FirstStepWindow JD-Core Version: 0.6.0
- */
