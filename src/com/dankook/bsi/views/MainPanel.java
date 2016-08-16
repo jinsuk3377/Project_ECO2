@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.dankook.bsi.util.Ui_Model;
+import com.dankook.bsi.model.Ui_Model;
 import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.dataprocessing.*;
 
@@ -50,7 +50,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	
 	private void createInfoGbXmlPanel() {
 		infoGbXmlPanel = new InfoGbXml_Panel();
-		infoGbXmlPanel.setSize(660, 450);
+		infoGbXmlPanel.setSize(660, 500);
 		infoGbXmlPanel.setToolTipText("");
 		infoGbXmlPanel.setModel(_model);
 		infoGbXmlPanel.setLocation(10, 150);
@@ -60,7 +60,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	private void createSimulationButton() {
 		simulationButton.setForeground(SystemColor.desktop);
 		simulationButton.setFont(new Font("Consolas", 0, 13));
-		simulationButton.setBounds(535, 615, 132, 28);
+		simulationButton.setBounds(535, 660, 132, 28);
 		simulationButton.addActionListener(this);
 		add(simulationButton);
 	}

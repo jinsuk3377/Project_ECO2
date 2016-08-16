@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.dankook.bsi.exception.GBXmlValidationError;
-import com.dankook.bsi.util.Ui_Model;
+import com.dankook.bsi.model.*;
 
 public class InfoGbXml_Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -98,30 +98,45 @@ public class InfoGbXml_Panel extends JPanel {
 	private JLabel efficiencyLabel;
 	private JLabel lightingDensityLabel;
 	private JLabel heatingLabel;
-	private JLabel waterHeatingLabel;
+	private JLabel heatingPumpLabel;
 	private JLabel coolingLabel;
 	private JLabel lightingLabel;
 	
 	private JComboBox heatingSystemComboBox;
-	private JComboBox waterHeatingSystemComboBox;
+	private JComboBox heatingPumpSystemComboBox;
 	private JComboBox coolingSystemComboBox;
 	private JTextField lightingDensityTextField;
 	private JLabel lightingDensityUnitLabel;
 	
 	private JTextField heatingVolumnTextField;
-	private JTextField waterHeatingVolumnTextField;
+	private JTextField heatingPumpVolumnTextField;
 	private JTextField coolingVolumnTextField;
 	private JLabel heatingVolumnUnitLabel;
-	private JLabel waterHeatingVolumnUnitLabel;
+	private JLabel heatingPumpVolumnUnitLabel;
 	private JLabel coolingVolumnUnitLabel;
 	
 	private JTextField heatingEfficiencyTextField;
-	private JTextField waterHeatingEfficiencyTextField;
+	private JTextField heatingPumpEfficiencyTextField;
 	private JTextField coolingEfficiencyTextField;
 	private JLabel heatingEfficiencyUnitLabel;
-	private JLabel waterHeatingEfficiencyUnitLabel;
+	private JLabel heatingPumpEfficiencyUnitLabel;
 	private JLabel coolingEfficiencyUnitLabel;
 	
+	private JLabel renewableEnergyLabel;
+	private JLabel solarThermalLabel;
+	private JLabel photovoltaicLabel;
+	private JLabel geothlermaHeatPumpLabel;
+	private JLabel areaLabel;
+	private JLabel volumn2Label;
+	private JTextField solarThermalAreaTextField;
+	private JTextField photovoltaicAreaTextField;
+	private JTextField geothlermaHeatPumpVolumnTextField;
+	private JLabel solarThermalAreaUnitLabel;
+	private JLabel photovoltaicAreaUnitLabel;
+	private JLabel geothlermaHeatPumpVolumnUnitLabel;
+	private JLabel efficiency2Label;
+	private JTextField geothlermaHeatPumpEfficiencyTextField;
+	private JLabel geothlermaHeatPumpEfficiencyUnitLabel;
 	
 	public InfoGbXml_Panel() {
 		setLayout(null);
@@ -134,6 +149,7 @@ public class InfoGbXml_Panel extends JPanel {
 		createDetailAreaInfo();
 		createDetailUValueInfo();
 		createDetailHVACInfo();
+		createDetailRenewableEnergyInfo();
 		
 	}
 	
@@ -202,7 +218,7 @@ public class InfoGbXml_Panel extends JPanel {
 		add(detailLabel);
 		
 		buildingLabel = new JLabel("<건축>");
-		buildingLabel.setBounds(600, 113, 70, 15);
+		buildingLabel.setBounds(595, 113, 70, 15);
 		buildingLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		buildingLabel.setForeground(Color.BLUE);
 		add(buildingLabel);
@@ -469,148 +485,148 @@ public class InfoGbXml_Panel extends JPanel {
 	private void createDetailHVACInfo() {
 		
 		HVACLabel = new JLabel("<설비>");
-		HVACLabel.setBounds(600, 277, 70, 15);
+		HVACLabel.setBounds(595, 257, 70, 15);
 		HVACLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		HVACLabel.setForeground(Color.BLUE);
 		add(HVACLabel);
 		
 		systemLabel = new JLabel("기기방식");
-		systemLabel.setBounds(110, 300, 70, 15);
+		systemLabel.setBounds(110, 280, 70, 15);
 		systemLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(systemLabel);
 		
 		volumnLabel = new JLabel("용량");
-		volumnLabel.setBounds(210, 300, 70, 15);
+		volumnLabel.setBounds(210, 280, 70, 15);
 		volumnLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(volumnLabel);
 		
 		efficiencyLabel = new JLabel("효율");
-		efficiencyLabel.setBounds(310, 300, 70, 15);
+		efficiencyLabel.setBounds(310, 280, 70, 15);
 		efficiencyLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(efficiencyLabel);
 		
 		lightingDensityLabel = new JLabel("조명밀도");
-		lightingDensityLabel.setBounds(510, 300, 70, 15);
+		lightingDensityLabel.setBounds(510, 280, 70, 15);
 		lightingDensityLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(lightingDensityLabel);
 		
 		heatingLabel = new JLabel("난방기기");
-		heatingLabel.setBounds(20, 325, 70, 15);
+		heatingLabel.setBounds(20, 305, 70, 15);
 		heatingLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(heatingLabel);
 		
-		waterHeatingLabel= new JLabel("급탕기기");
-		waterHeatingLabel.setBounds(20, 350, 70, 15);
-		waterHeatingLabel.setFont(new Font("바탕", Font.PLAIN, 12));
-		add(waterHeatingLabel);
+		heatingPumpLabel= new JLabel("급탕기기");
+		heatingPumpLabel.setBounds(20, 330, 70, 15);
+		heatingPumpLabel.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(heatingPumpLabel);
 		
 		coolingLabel = new JLabel("냉방기기");
-		coolingLabel.setBounds(20, 375, 70, 15);
+		coolingLabel.setBounds(20, 355, 70, 15);
 		coolingLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(coolingLabel);
 		
 		lightingLabel = new JLabel("조명기기");
-		lightingLabel.setBounds(420, 325, 70, 15);
+		lightingLabel.setBounds(420, 305, 70, 15);
 		lightingLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(lightingLabel);
 		
 		heatingSystemComboBox = new JComboBox();
 		heatingSystemComboBox.setModel(new DefaultComboBoxModel(
 				new String[] { "보일러", "지역난방", "EHP" }));
-		heatingSystemComboBox.setBounds(103, 324, 75, 18);
+		heatingSystemComboBox.setBounds(103, 304, 75, 18);
 		heatingSystemComboBox.setFont(new Font("굴림", Font.PLAIN, 12));
 		add(heatingSystemComboBox);
 		
-		waterHeatingSystemComboBox = new JComboBox();
-		waterHeatingSystemComboBox.setModel(new DefaultComboBoxModel(
+		heatingPumpSystemComboBox = new JComboBox();
+		heatingPumpSystemComboBox.setModel(new DefaultComboBoxModel(
 				new String[] { "보일러", "지역난방", "EHP" }));
-		waterHeatingSystemComboBox.setBounds(103, 349, 75, 18);
-		waterHeatingSystemComboBox.setFont(new Font("굴림", Font.PLAIN, 12));
-		add(waterHeatingSystemComboBox);
-		waterHeatingSystemComboBox.setSelectedIndex(1);
+		heatingPumpSystemComboBox.setBounds(103, 329, 75, 18);
+		heatingPumpSystemComboBox.setFont(new Font("굴림", Font.PLAIN, 12));
+		add(heatingPumpSystemComboBox);
+		heatingPumpSystemComboBox.setSelectedIndex(1);
 		
 		coolingSystemComboBox = new JComboBox();
 		coolingSystemComboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "보일러", "지역난방", "EHP" }));
-		coolingSystemComboBox.setBounds(103, 374, 75, 18);
+				new String[] { "압축식", "흡수식", "EHP" }));
+		coolingSystemComboBox.setBounds(103, 354, 75, 18);
 		coolingSystemComboBox.setFont(new Font("굴림", Font.PLAIN, 12));
 		add(coolingSystemComboBox);
 		coolingSystemComboBox.setSelectedIndex(2);
 		
 		lightingDensityTextField = new JTextField("15");
-		lightingDensityTextField.setBounds(507, 323, 55, 20);
+		lightingDensityTextField.setBounds(507, 303, 55, 20);
 		lightingDensityTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		lightingDensityTextField.setEditable(false);
 		add(lightingDensityTextField);
 		
 		lightingDensityUnitLabel = new JLabel("W/m2");
-		lightingDensityUnitLabel.setBounds(566, 327, 60, 15);
+		lightingDensityUnitLabel.setBounds(566, 307, 60, 15);
 		lightingDensityUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(lightingDensityUnitLabel);
 		
 		heatingVolumnTextField = new JTextField("868.3653");
-		heatingVolumnTextField.setBounds(200, 323, 55, 20);
+		heatingVolumnTextField.setBounds(200, 303, 55, 20);
 		heatingVolumnTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		heatingVolumnTextField.setEditable(false);
 		add(heatingVolumnTextField);
 		
-		waterHeatingVolumnTextField = new JTextField("561.4204");
-		waterHeatingVolumnTextField.setBounds(200, 348, 55, 20);
-		waterHeatingVolumnTextField.setFont(new Font("바탕", Font.PLAIN, 12));
-		waterHeatingVolumnTextField.setEditable(false);
-		add(waterHeatingVolumnTextField);
+		heatingPumpVolumnTextField = new JTextField("561.4204");
+		heatingPumpVolumnTextField.setBounds(200, 328, 55, 20);
+		heatingPumpVolumnTextField.setFont(new Font("바탕", Font.PLAIN, 12));
+		heatingPumpVolumnTextField.setEditable(false);
+		add(heatingPumpVolumnTextField);
 		
 		coolingVolumnTextField = new JTextField("717.5163");
-		coolingVolumnTextField.setBounds(200, 373, 55, 20);
+		coolingVolumnTextField.setBounds(200, 353, 55, 20);
 		coolingVolumnTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		coolingVolumnTextField.setEditable(false);
 		add(coolingVolumnTextField);
 		
 		heatingVolumnUnitLabel = new JLabel("kW");
-		heatingVolumnUnitLabel.setBounds(259, 327, 60, 15);
+		heatingVolumnUnitLabel.setBounds(259, 307, 60, 15);
 		heatingVolumnUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(heatingVolumnUnitLabel);
 		
-		waterHeatingVolumnUnitLabel = new JLabel("kW");
-		waterHeatingVolumnUnitLabel.setBounds(259, 352, 60, 15);
-		waterHeatingVolumnUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
-		add(waterHeatingVolumnUnitLabel);
+		heatingPumpVolumnUnitLabel = new JLabel("kW");
+		heatingPumpVolumnUnitLabel.setBounds(259, 332, 60, 15);
+		heatingPumpVolumnUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
+		add(heatingPumpVolumnUnitLabel);
 		
 		coolingVolumnUnitLabel = new JLabel("kW");
-		coolingVolumnUnitLabel.setBounds(259, 377, 60, 15);
+		coolingVolumnUnitLabel.setBounds(259, 357, 60, 15);
 		coolingVolumnUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(coolingVolumnUnitLabel);
 		
 		heatingEfficiencyTextField = new JTextField("100");
-		heatingEfficiencyTextField.setBounds(305, 323, 30, 20);
+		heatingEfficiencyTextField.setBounds(305, 303, 30, 20);
 		heatingEfficiencyTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		heatingEfficiencyTextField.setEditable(false);
 		add(heatingEfficiencyTextField);
 		
-		waterHeatingEfficiencyTextField = new JTextField("88");
-		waterHeatingEfficiencyTextField.setBounds(305, 348, 30, 20);
-		waterHeatingEfficiencyTextField.setFont(new Font("바탕", Font.PLAIN, 12));
-		waterHeatingEfficiencyTextField.setEditable(false);
-		add(waterHeatingEfficiencyTextField);
+		heatingPumpEfficiencyTextField = new JTextField("88");
+		heatingPumpEfficiencyTextField.setBounds(305, 328, 30, 20);
+		heatingPumpEfficiencyTextField.setFont(new Font("바탕", Font.PLAIN, 12));
+		heatingPumpEfficiencyTextField.setEditable(false);
+		add(heatingPumpEfficiencyTextField);
 		
 		coolingEfficiencyTextField = new JTextField("3.78");
-		coolingEfficiencyTextField.setBounds(305, 373, 45, 20);
+		coolingEfficiencyTextField.setBounds(305, 353, 45, 20);
 		coolingEfficiencyTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		coolingEfficiencyTextField.setEditable(false);
 		add(coolingEfficiencyTextField);
 		
 		heatingEfficiencyUnitLabel = new JLabel("%");
-		heatingEfficiencyUnitLabel.setBounds(339, 326, 60, 15);
+		heatingEfficiencyUnitLabel.setBounds(339, 306, 60, 15);
 		heatingEfficiencyUnitLabel.setFont(new Font("바탕", Font.PLAIN, 11));
 		add(heatingEfficiencyUnitLabel);
 		
-		waterHeatingEfficiencyUnitLabel = new JLabel("%");
-		waterHeatingEfficiencyUnitLabel.setBounds(339, 351, 60, 15);
-		waterHeatingEfficiencyUnitLabel.setFont(new Font("바탕", Font.PLAIN, 11));
-		add(waterHeatingEfficiencyUnitLabel);
+		heatingPumpEfficiencyUnitLabel = new JLabel("%");
+		heatingPumpEfficiencyUnitLabel.setBounds(339, 331, 60, 15);
+		heatingPumpEfficiencyUnitLabel.setFont(new Font("바탕", Font.PLAIN, 11));
+		add(heatingPumpEfficiencyUnitLabel);
 		
 		coolingEfficiencyUnitLabel = new JLabel("COP");
-		coolingEfficiencyUnitLabel.setBounds(354, 376, 70, 15);
+		coolingEfficiencyUnitLabel.setBounds(354, 356, 70, 15);
 		coolingEfficiencyUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(coolingEfficiencyUnitLabel);
 		
@@ -618,10 +634,89 @@ public class InfoGbXml_Panel extends JPanel {
 		 * 
 		
 		private JLabel heatingEfficiencyUnitLabel;
-		private JLabel waterHeatingEfficiencyUnitLabel;
+		private JLabel heatingPumpEfficiencyUnitLabel;
 		private JLabel coolingEfficiencyUnitLabel;
 		 */
+	}
+	
+	private void createDetailRenewableEnergyInfo() {
 		
+		renewableEnergyLabel = new JLabel("<신재생>");
+		renewableEnergyLabel.setBounds(583, 373, 70, 15);
+		renewableEnergyLabel.setFont(new Font("바탕", Font.PLAIN, 12));
+		renewableEnergyLabel.setForeground(Color.BLUE);
+		add(renewableEnergyLabel);
+
+		areaLabel = new JLabel("면적");
+		areaLabel.setBounds(100, 396, 70, 15);
+		areaLabel.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(areaLabel);
+		
+		volumn2Label = new JLabel("용량");
+		volumn2Label.setBounds(370, 396, 70, 15);
+		volumn2Label.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(volumn2Label);
+		
+		efficiency2Label = new JLabel("효율");
+		efficiency2Label.setBounds(470, 396, 70, 15);
+		efficiency2Label.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(efficiency2Label);
+		
+		solarThermalLabel = new JLabel("태양열");
+		solarThermalLabel.setBounds(20, 421, 70, 15);
+		solarThermalLabel.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(solarThermalLabel);
+		
+		photovoltaicLabel= new JLabel("태양광");
+		photovoltaicLabel.setBounds(20, 446, 70, 15);
+		photovoltaicLabel.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(photovoltaicLabel);
+		
+		solarThermalAreaTextField = new JTextField("");
+		solarThermalAreaTextField.setBounds(93, 421, 55, 20);
+		solarThermalAreaTextField.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(solarThermalAreaTextField);
+		
+		photovoltaicAreaTextField = new JTextField("");
+		photovoltaicAreaTextField.setBounds(93, 446, 55, 20);
+		photovoltaicAreaTextField.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(photovoltaicAreaTextField);
+		
+		solarThermalAreaUnitLabel = new JLabel("m2");
+		solarThermalAreaUnitLabel.setBounds(152, 421, 60, 15);
+		solarThermalAreaUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
+		add(solarThermalAreaUnitLabel);
+		
+		photovoltaicAreaUnitLabel = new JLabel("m2");
+		photovoltaicAreaUnitLabel.setBounds(152, 446, 60, 15);
+		photovoltaicAreaUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
+		add(photovoltaicAreaUnitLabel);
+		
+		geothlermaHeatPumpLabel = new JLabel("지열히트펌프");
+		geothlermaHeatPumpLabel.setBounds(260, 421, 90, 15);
+		geothlermaHeatPumpLabel.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(geothlermaHeatPumpLabel);
+		
+		geothlermaHeatPumpVolumnTextField = new JTextField("");
+		geothlermaHeatPumpVolumnTextField.setBounds(363, 421, 55, 20);
+		geothlermaHeatPumpVolumnTextField.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(geothlermaHeatPumpVolumnTextField);
+		
+		geothlermaHeatPumpVolumnUnitLabel = new JLabel("kW");
+		geothlermaHeatPumpVolumnUnitLabel.setBounds(422, 421, 60, 15);
+		geothlermaHeatPumpVolumnUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
+		add(geothlermaHeatPumpVolumnUnitLabel);
+		
+		geothlermaHeatPumpEfficiencyTextField = new JTextField("");
+		geothlermaHeatPumpEfficiencyTextField.setBounds(463, 421, 45, 20);
+		geothlermaHeatPumpEfficiencyTextField.setFont(new Font("바탕", Font.PLAIN, 12));
+		add(geothlermaHeatPumpEfficiencyTextField);
+		
+		geothlermaHeatPumpEfficiencyUnitLabel = new JLabel("COP");
+		geothlermaHeatPumpEfficiencyUnitLabel.setBounds(514, 421, 70, 15);
+		geothlermaHeatPumpEfficiencyUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
+		add(geothlermaHeatPumpEfficiencyUnitLabel);
+	
 	}
 	
 	public void updateInfo() {

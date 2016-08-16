@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import com.dankook.bsi.util.Ui_Model;
+import com.dankook.bsi.model.Ui_Model;
 import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.*;
 
@@ -24,7 +24,7 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 					Ui_Main frame = new Ui_Main();
 					frame.setTitle("ECO2 Simulator");
 					frame.setDefaultCloseOperation(3);
-					frame.setSize(700, 700);
+					frame.setSize(700, 750);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

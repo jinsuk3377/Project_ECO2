@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.dankook.bsi.exception.GBXmlValidationError;
-import com.dankook.bsi.util.Ui_Model;
+import com.dankook.bsi.model.Ui_Model;
 
 public class LoadGbXml_Panel extends JPanel {
 	private static final long serialVersionUID = 1L;

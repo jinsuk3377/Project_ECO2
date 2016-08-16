@@ -1,9 +1,11 @@
-package com.dankook.bsi.util;
+package com.dankook.bsi.model;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.dankook.bsi.exception.*;
+import com.dankook.bsi.util.GBXmlReader;
+import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.util.greenbuilding.GBXmlContext;
 
 public class Ui_Model implements Ui_Observer {
