@@ -1,10 +1,13 @@
 package com.dankook.bsi.views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,6 +15,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
@@ -20,8 +25,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import com.dankook.bsi.exception.GBXmlValidationError;
 import com.dankook.bsi.model.*;
 
-public class InfoGbXml_Panel extends JPanel {
+public class InfoGbXml_Panel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	
+	private final String[] PrimarySystemTypes = { "Boiler", "Chiller", "HeatPump" };
 	
 	Ui_Model _model;
 	
@@ -93,6 +100,22 @@ public class InfoGbXml_Panel extends JPanel {
 	private JLabel windowUValueUnitLabel;
 	
 	private JLabel HVACLabel;
+	private ButtonGroup RadioGroup;
+	private JRadioButton HVACRadioButton1;
+	private JRadioButton HVACRadioButton2;
+	private JPanel AutomaticPanel;
+	private JComboBox<String> PrimarySystemComboBox;
+	private JPanel ChillerPanel;
+	private JPanel BoilerPanel;
+	private JPanel ChillerHeaterPanel;
+	private JPanel HeatPumpPanel;
+	private JButton PrimaryApplyButton;
+	private JScrollPane ChillerScroll;
+	private JScrollPane BoilerScroll;
+	private JScrollPane ChillerHeaterScroll;
+	private JScrollPane HeatPumpScroll;
+
+	/*
 	private JLabel systemLabel;
 	private JLabel volumnLabel;
 	private JLabel efficiencyLabel;
@@ -121,7 +144,7 @@ public class InfoGbXml_Panel extends JPanel {
 	private JLabel heatingEfficiencyUnitLabel;
 	private JLabel heatingPumpEfficiencyUnitLabel;
 	private JLabel coolingEfficiencyUnitLabel;
-	
+	*/
 	private JLabel renewableEnergyLabel;
 	private JLabel solarThermalLabel;
 	private JLabel photovoltaicLabel;
@@ -150,12 +173,9 @@ public class InfoGbXml_Panel extends JPanel {
 		createDetailUValueInfo();
 		createDetailHVACInfo();
 		createDetailRenewableEnergyInfo();
-		
 	}
 	
 	private void createBasicInfo() {
-		
-		
 		
 		basicLabel = new JLabel("건축물 기본정보");
 		basicLabel.setBounds(15, 25, 150, 15);
@@ -212,192 +232,192 @@ public class InfoGbXml_Panel extends JPanel {
 	private void createDetailAreaInfo() {
 		
 		detailLabel = new JLabel("건축물 상세정보");
-		detailLabel.setBounds(15, 115, 150, 15);
+		detailLabel.setBounds(15, 110, 150, 15);
 		detailLabel.setFont(new Font("바탕", Font.PLAIN, 13));
 		detailLabel.setForeground(Color.BLUE);
 		add(detailLabel);
 		
 		buildingLabel = new JLabel("<건축>");
-		buildingLabel.setBounds(595, 113, 70, 15);
+		buildingLabel.setBounds(595, 108, 70, 15);
 		buildingLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		buildingLabel.setForeground(Color.BLUE);
 		add(buildingLabel);
 		
 		mainPointLabel = new JLabel("주 방위");
-		mainPointLabel.setBounds(160, 117, 70, 15);
+		mainPointLabel.setBounds(160, 112, 70, 15);
 		mainPointLabel.setFont(new Font("바탕", Font.PLAIN, 11));
 		add(mainPointLabel);
 		
 		mainPointTextField = new JTextField("남");
-		mainPointTextField.setBounds(210, 115, 20, 18);
+		mainPointTextField.setBounds(210, 110, 20, 18);
 		mainPointTextField.setFont(new Font("바탕", Font.PLAIN, 11));
 		mainPointTextField.setEditable(false);
 		add(mainPointTextField);
 		
 		southLabel = new JLabel("남");
-		southLabel.setBounds(20, 165, 50, 15);
+		southLabel.setBounds(20, 160, 50, 15);
 		southLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(southLabel);
 		
 		westLabel = new JLabel("서");
-		westLabel.setBounds(20, 190, 50, 15);
+		westLabel.setBounds(20, 185, 50, 15);
 		westLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(westLabel);
 		
 		northLabel = new JLabel("북");
-		northLabel.setBounds(20, 215, 50, 15);
+		northLabel.setBounds(20, 210, 50, 15);
 		northLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(northLabel);
 		
 		eastLabel = new JLabel("동");
-		eastLabel.setBounds(20, 240, 50, 15);
+		eastLabel.setBounds(20, 235, 50, 15);
 		eastLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(eastLabel);
 		
 		exteriorAreaLabel = new JLabel("외피면적");
-		exteriorAreaLabel.setBounds(72, 140, 50, 15);
+		exteriorAreaLabel.setBounds(72, 135, 50, 15);
 		exteriorAreaLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(exteriorAreaLabel);
 		
 		exteriorAreaSouthTextField = new JTextField("1772.133");
-		exteriorAreaSouthTextField.setBounds(65, 163, 55, 20);
+		exteriorAreaSouthTextField.setBounds(65, 158, 55, 20);
 		exteriorAreaSouthTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorAreaSouthTextField.setEditable(false);
 		add(exteriorAreaSouthTextField);
 		
 		exteriorAreaWestTextField = new JTextField("866.0667");
-		exteriorAreaWestTextField.setBounds(65, 188, 55, 20);
+		exteriorAreaWestTextField.setBounds(65, 183, 55, 20);
 		exteriorAreaWestTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorAreaWestTextField.setEditable(false);
 		add(exteriorAreaWestTextField);
 		
 		exteriorAreaNorthTextField = new JTextField("1772.133");
-		exteriorAreaNorthTextField.setBounds(65, 213, 55, 20);
+		exteriorAreaNorthTextField.setBounds(65, 208, 55, 20);
 		exteriorAreaNorthTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorAreaNorthTextField.setEditable(false);
 		add(exteriorAreaNorthTextField);
 		
 		exteriorAreaEastTextField = new JTextField("866.0667");
-		exteriorAreaEastTextField.setBounds(65, 238, 55, 20);
+		exteriorAreaEastTextField.setBounds(65, 233, 55, 20);
 		exteriorAreaEastTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorAreaEastTextField.setEditable(false);
 		add(exteriorAreaEastTextField);
 		
 		exteriorAreaSouthUnitLabel = new JLabel("m2");
-		exteriorAreaSouthUnitLabel.setBounds(124, 166, 20, 15);
+		exteriorAreaSouthUnitLabel.setBounds(124, 161, 20, 15);
 		exteriorAreaSouthUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorAreaSouthUnitLabel);
 		
 		exteriorAreaWestUnitLabel = new JLabel("m2");
-		exteriorAreaWestUnitLabel.setBounds(124, 191, 20, 15);
+		exteriorAreaWestUnitLabel.setBounds(124, 186, 20, 15);
 		exteriorAreaWestUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorAreaWestUnitLabel);
 		
 		exteriorAreaNorthUnitLabel = new JLabel("m2");
-		exteriorAreaNorthUnitLabel.setBounds(124, 216, 20, 15);
+		exteriorAreaNorthUnitLabel.setBounds(124, 211, 20, 15);
 		exteriorAreaNorthUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorAreaNorthUnitLabel);
 		
 		exteriorAreaEastUnitLabel = new JLabel("m2");
-		exteriorAreaEastUnitLabel.setBounds(124, 241, 20, 15);
+		exteriorAreaEastUnitLabel.setBounds(124, 236, 20, 15);
 		exteriorAreaEastUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorAreaEastUnitLabel);
 		
 		windowAreaLabel = new JLabel("창면적");
-		windowAreaLabel.setBounds(172, 140, 50, 15);
+		windowAreaLabel.setBounds(172, 135, 50, 15);
 		windowAreaLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(windowAreaLabel);
 		
 		windowAreaSouthTextField = new JTextField("886.0666");
-		windowAreaSouthTextField.setBounds(165, 163, 55, 20);
+		windowAreaSouthTextField.setBounds(165, 158, 55, 20);
 		windowAreaSouthTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		windowAreaSouthTextField.setEditable(false);
 		add(windowAreaSouthTextField);
 		
 		windowAreaWestTextField = new JTextField("531.6399");
-		windowAreaWestTextField.setBounds(165, 188, 55, 20);
+		windowAreaWestTextField.setBounds(165, 183, 55, 20);
 		windowAreaWestTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		windowAreaWestTextField.setEditable(false);
 		add(windowAreaWestTextField);
 		
 		windowAreaNorthTextField = new JTextField("1063.279");
-		windowAreaNorthTextField.setBounds(165, 213, 55, 20);
+		windowAreaNorthTextField.setBounds(165, 208, 55, 20);
 		windowAreaNorthTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		windowAreaNorthTextField.setEditable(false);
 		add(windowAreaNorthTextField);
 		
 		windowAreaEastTextField = new JTextField("531.6399");
-		windowAreaEastTextField.setBounds(165, 238, 55, 20);
+		windowAreaEastTextField.setBounds(165, 233, 55, 20);
 		windowAreaEastTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		windowAreaEastTextField.setEditable(false);
 		add(windowAreaEastTextField);
 		
 		windowAreaSouthUnitLabel = new JLabel("m2");
-		windowAreaSouthUnitLabel.setBounds(224, 166, 20, 15);
+		windowAreaSouthUnitLabel.setBounds(224, 161, 20, 15);
 		windowAreaSouthUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(windowAreaSouthUnitLabel);
 		
 		windowAreaWestUnitLabel = new JLabel("m2");
-		windowAreaWestUnitLabel.setBounds(224, 191, 20, 15);
+		windowAreaWestUnitLabel.setBounds(224, 186, 20, 15);
 		windowAreaWestUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(windowAreaWestUnitLabel);
 		
 		windowAreaNorthUnitLabel = new JLabel("m2");
-		windowAreaNorthUnitLabel.setBounds(224, 216, 20, 15);
+		windowAreaNorthUnitLabel.setBounds(224, 211, 20, 15);
 		windowAreaNorthUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(windowAreaNorthUnitLabel);
 		
 		windowAreaEastUnitLabel = new JLabel("m2");
-		windowAreaEastUnitLabel.setBounds(224, 241, 20, 15);
+		windowAreaEastUnitLabel.setBounds(224, 236, 20, 15);
 		windowAreaEastUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(windowAreaEastUnitLabel);
 		
 		exteriorWallAreaLabel = new JLabel("벽체면적");
-		exteriorWallAreaLabel.setBounds(272, 140, 50, 15);
+		exteriorWallAreaLabel.setBounds(272, 135, 50, 15);
 		exteriorWallAreaLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(exteriorWallAreaLabel);
 		
 		exteriorWallAreaSouthTextField = new JTextField("886.0666");
-		exteriorWallAreaSouthTextField.setBounds(265, 163, 55, 20);
+		exteriorWallAreaSouthTextField.setBounds(265, 158, 55, 20);
 		exteriorWallAreaSouthTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorWallAreaSouthTextField.setEditable(false);
 		add(exteriorWallAreaSouthTextField);
 		
 		exteriorWallAreaWestTextField = new JTextField("354.4267");
-		exteriorWallAreaWestTextField.setBounds(265, 188, 55, 20);
+		exteriorWallAreaWestTextField.setBounds(265, 183, 55, 20);
 		exteriorWallAreaWestTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorWallAreaWestTextField.setEditable(false);
 		add(exteriorWallAreaWestTextField);
 		
 		exteriorWallAreaNorthTextField = new JTextField("708.8533");
-		exteriorWallAreaNorthTextField.setBounds(265, 213, 55, 20);
+		exteriorWallAreaNorthTextField.setBounds(265, 208, 55, 20);
 		exteriorWallAreaNorthTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorWallAreaNorthTextField.setEditable(false);
 		add(exteriorWallAreaNorthTextField);
 		
 		exteriorWallAreaEastTextField = new JTextField("354.4267");
-		exteriorWallAreaEastTextField.setBounds(265, 238, 55, 20);
+		exteriorWallAreaEastTextField.setBounds(265, 233, 55, 20);
 		exteriorWallAreaEastTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		exteriorWallAreaEastTextField.setEditable(false);
 		add(exteriorWallAreaEastTextField);
 		
 		exteriorWallAreaSouthUnitLabel = new JLabel("m2");
-		exteriorWallAreaSouthUnitLabel.setBounds(324, 166, 20, 15);
+		exteriorWallAreaSouthUnitLabel.setBounds(324, 161, 20, 15);
 		exteriorWallAreaSouthUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorWallAreaSouthUnitLabel);
 		
 		exteriorWallAreaWestUnitLabel = new JLabel("m2");
-		exteriorWallAreaWestUnitLabel.setBounds(324, 191, 20, 15);
+		exteriorWallAreaWestUnitLabel.setBounds(324, 186, 20, 15);
 		exteriorWallAreaWestUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorWallAreaWestUnitLabel);
 		
 		exteriorWallAreaNorthUnitLabel = new JLabel("m2");
-		exteriorWallAreaNorthUnitLabel.setBounds(324, 216, 20, 15);
+		exteriorWallAreaNorthUnitLabel.setBounds(324, 211, 20, 15);
 		exteriorWallAreaNorthUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorWallAreaNorthUnitLabel);
 		
 		exteriorWallAreaEastUnitLabel = new JLabel("m2");
-		exteriorWallAreaEastUnitLabel.setBounds(324, 241, 20, 15);
+		exteriorWallAreaEastUnitLabel.setBounds(324, 236, 20, 15);
 		exteriorWallAreaEastUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(exteriorWallAreaEastUnitLabel);
 		
@@ -484,11 +504,7 @@ public class InfoGbXml_Panel extends JPanel {
 	
 	private void createDetailHVACInfo() {
 		
-		HVACLabel = new JLabel("<설비>");
-		HVACLabel.setBounds(595, 257, 70, 15);
-		HVACLabel.setFont(new Font("바탕", Font.PLAIN, 12));
-		HVACLabel.setForeground(Color.BLUE);
-		add(HVACLabel);
+		/*
 		
 		systemLabel = new JLabel("기기방식");
 		systemLabel.setBounds(110, 280, 70, 15);
@@ -629,91 +645,161 @@ public class InfoGbXml_Panel extends JPanel {
 		coolingEfficiencyUnitLabel.setBounds(354, 356, 70, 15);
 		coolingEfficiencyUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(coolingEfficiencyUnitLabel);
+		*/
 		
-		/*
-		 * 
+		HVACLabel = new JLabel("<설비>");
+		HVACLabel.setBounds(595, 280, 70, 15);
+		HVACLabel.setFont(new Font("바탕", Font.PLAIN, 12));
+		HVACLabel.setForeground(Color.BLUE);
+		add(HVACLabel);
 		
-		private JLabel heatingEfficiencyUnitLabel;
-		private JLabel heatingPumpEfficiencyUnitLabel;
-		private JLabel coolingEfficiencyUnitLabel;
-		 */
+		RadioGroup = new ButtonGroup();
+		
+		HVACRadioButton1 = new JRadioButton("자동");
+		HVACRadioButton1.setBounds(180, 283, 70, 15);
+		HVACRadioButton1.setFont(new Font("바탕", Font.PLAIN, 11));
+		HVACRadioButton1.setForeground(Color.BLUE);
+		HVACRadioButton1.addActionListener(this);
+		HVACRadioButton1.setActionCommand("1");
+		HVACRadioButton1.setSelected(true);
+		RadioGroup.add(HVACRadioButton1);
+		add(HVACRadioButton1);
+		
+		HVACRadioButton2 = new JRadioButton("수동");
+		HVACRadioButton2.setBounds(250, 283, 70, 15);
+		HVACRadioButton2.setFont(new Font("바탕", Font.PLAIN, 11));
+		HVACRadioButton2.setForeground(Color.BLUE);
+		HVACRadioButton2.addActionListener(this);
+		HVACRadioButton2.setActionCommand("1");
+		RadioGroup.add(HVACRadioButton2);
+		add(HVACRadioButton2);
+		
+		PrimarySystemComboBox = new JComboBox();
+		PrimarySystemComboBox.setBounds(330, 280, 90, 20);
+		PrimarySystemComboBox.setModel(new DefaultComboBoxModel(
+				PrimarySystemTypes));
+		PrimarySystemComboBox.addActionListener(this);
+		PrimarySystemComboBox.setEnabled(false);
+		add(PrimarySystemComboBox);
+		PrimarySystemComboBox.setFont(new Font("Consolas", Font.PLAIN, 13));
+		
+		AutomaticPanel = new HvacAutomatic();
+		AutomaticPanel.setBounds(5, 310, 650, 220);
+		add(AutomaticPanel);
+
+		BoilerPanel = new HvacBoiler();
+		BoilerPanel.setPreferredSize(new Dimension(650, 760));
+		BoilerPanel.setBorder(new TitledBorder(null, "Boiler", 4, 2, null,
+				null));
+		add(BoilerPanel);
+		ChillerPanel = new HvacChiller();
+		ChillerPanel.setPreferredSize(new Dimension(650, 760));
+		ChillerPanel.setBorder(new TitledBorder(null, "Chiller", 4, 2, null,
+				null));
+		add(ChillerPanel);
+		HeatPumpPanel = new HvacHeatPump();
+		HeatPumpPanel.setPreferredSize(new Dimension(650, 1110));
+		HeatPumpPanel.setBorder(new TitledBorder(null, "HeatPump",
+				4, 2, null, null));
+		add(HeatPumpPanel);
+
+		BoilerScroll = new JScrollPane(BoilerPanel,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		BoilerScroll.setBounds(5, 310, 650, 220);
+		BoilerScroll.setVisible(false);
+		add(BoilerScroll, BorderLayout.CENTER);
+		ChillerScroll = new JScrollPane(ChillerPanel,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		ChillerScroll.setBounds(5, 310, 650, 220);
+		ChillerScroll.setVisible(false);
+		add(ChillerScroll, BorderLayout.CENTER);
+		HeatPumpScroll = new JScrollPane(HeatPumpPanel,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		HeatPumpScroll.setBounds(5, 310, 650, 220);
+		HeatPumpScroll.setVisible(false);
+		add(HeatPumpScroll, BorderLayout.CENTER);
+
 	}
+	
 	
 	private void createDetailRenewableEnergyInfo() {
 		
 		renewableEnergyLabel = new JLabel("<신재생>");
-		renewableEnergyLabel.setBounds(583, 373, 70, 15);
+		renewableEnergyLabel.setBounds(583, 555, 70, 15);
 		renewableEnergyLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		renewableEnergyLabel.setForeground(Color.BLUE);
 		add(renewableEnergyLabel);
 
 		areaLabel = new JLabel("면적");
-		areaLabel.setBounds(100, 396, 70, 15);
+		areaLabel.setBounds(100, 571, 70, 15);
 		areaLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(areaLabel);
 		
 		volumn2Label = new JLabel("용량");
-		volumn2Label.setBounds(370, 396, 70, 15);
+		volumn2Label.setBounds(370, 571, 70, 15);
 		volumn2Label.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(volumn2Label);
 		
 		efficiency2Label = new JLabel("효율");
-		efficiency2Label.setBounds(470, 396, 70, 15);
+		efficiency2Label.setBounds(470, 571, 70, 15);
 		efficiency2Label.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(efficiency2Label);
 		
 		solarThermalLabel = new JLabel("태양열");
-		solarThermalLabel.setBounds(20, 421, 70, 15);
+		solarThermalLabel.setBounds(20, 596, 70, 15);
 		solarThermalLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(solarThermalLabel);
 		
 		photovoltaicLabel= new JLabel("태양광");
-		photovoltaicLabel.setBounds(20, 446, 70, 15);
+		photovoltaicLabel.setBounds(20, 621, 70, 15);
 		photovoltaicLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(photovoltaicLabel);
 		
 		solarThermalAreaTextField = new JTextField("");
-		solarThermalAreaTextField.setBounds(93, 421, 55, 20);
+		solarThermalAreaTextField.setBounds(93, 596, 55, 20);
 		solarThermalAreaTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(solarThermalAreaTextField);
 		
 		photovoltaicAreaTextField = new JTextField("");
-		photovoltaicAreaTextField.setBounds(93, 446, 55, 20);
+		photovoltaicAreaTextField.setBounds(93, 621, 55, 20);
 		photovoltaicAreaTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(photovoltaicAreaTextField);
 		
 		solarThermalAreaUnitLabel = new JLabel("m2");
-		solarThermalAreaUnitLabel.setBounds(152, 421, 60, 15);
+		solarThermalAreaUnitLabel.setBounds(152, 596, 60, 15);
 		solarThermalAreaUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(solarThermalAreaUnitLabel);
 		
 		photovoltaicAreaUnitLabel = new JLabel("m2");
-		photovoltaicAreaUnitLabel.setBounds(152, 446, 60, 15);
+		photovoltaicAreaUnitLabel.setBounds(152, 621, 60, 15);
 		photovoltaicAreaUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(photovoltaicAreaUnitLabel);
 		
 		geothlermaHeatPumpLabel = new JLabel("지열히트펌프");
-		geothlermaHeatPumpLabel.setBounds(260, 421, 90, 15);
+		geothlermaHeatPumpLabel.setBounds(260, 596, 90, 15);
 		geothlermaHeatPumpLabel.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(geothlermaHeatPumpLabel);
 		
 		geothlermaHeatPumpVolumnTextField = new JTextField("");
-		geothlermaHeatPumpVolumnTextField.setBounds(363, 421, 55, 20);
+		geothlermaHeatPumpVolumnTextField.setBounds(363, 596, 55, 20);
 		geothlermaHeatPumpVolumnTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(geothlermaHeatPumpVolumnTextField);
 		
 		geothlermaHeatPumpVolumnUnitLabel = new JLabel("kW");
-		geothlermaHeatPumpVolumnUnitLabel.setBounds(422, 421, 60, 15);
+		geothlermaHeatPumpVolumnUnitLabel.setBounds(422, 596, 60, 15);
 		geothlermaHeatPumpVolumnUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(geothlermaHeatPumpVolumnUnitLabel);
 		
 		geothlermaHeatPumpEfficiencyTextField = new JTextField("");
-		geothlermaHeatPumpEfficiencyTextField.setBounds(463, 421, 45, 20);
+		geothlermaHeatPumpEfficiencyTextField.setBounds(463, 596, 45, 20);
 		geothlermaHeatPumpEfficiencyTextField.setFont(new Font("바탕", Font.PLAIN, 12));
 		add(geothlermaHeatPumpEfficiencyTextField);
 		
 		geothlermaHeatPumpEfficiencyUnitLabel = new JLabel("COP");
-		geothlermaHeatPumpEfficiencyUnitLabel.setBounds(514, 421, 70, 15);
+		geothlermaHeatPumpEfficiencyUnitLabel.setBounds(514, 596, 70, 15);
 		geothlermaHeatPumpEfficiencyUnitLabel.setFont(new Font("바탕", Font.PLAIN, 10));
 		add(geothlermaHeatPumpEfficiencyUnitLabel);
 	
@@ -733,5 +819,77 @@ public class InfoGbXml_Panel extends JPanel {
 
 	public void update(Object eventDispatcher) {
 		updateInfo();
+	}
+	
+	private void setVisibleAutomaticPanel() {
+		AutomaticPanel.setVisible(true);
+		ChillerScroll.setVisible(false);
+		BoilerScroll.setVisible(false);
+		HeatPumpScroll.setVisible(false);
+	}
+	
+	private void setVisibleBoilerPanel() {
+		AutomaticPanel.setVisible(false);
+		ChillerScroll.setVisible(false);
+		BoilerScroll.setVisible(true);
+		HeatPumpScroll.setVisible(false);
+	}
+	
+	private void setVisibleChillerPanel() {
+		AutomaticPanel.setVisible(false);
+		ChillerScroll.setVisible(true);
+		BoilerScroll.setVisible(false);
+		HeatPumpScroll.setVisible(false);
+	}
+
+	private void setVisibleHeatPumpPanel() {
+		AutomaticPanel.setVisible(false);
+		ChillerScroll.setVisible(false);
+		BoilerScroll.setVisible(false);
+		HeatPumpScroll.setVisible(true);
+	}
+	
+	public String getPrimaryType() {
+		int index = this.PrimarySystemComboBox.getSelectedIndex();
+		return this.PrimarySystemTypes[index];
+	}
+
+	private void getPrimaryApply() {
+		/*
+		if (getPrimaryType() == "Chiller")
+			((HvacChiller) this.ChillerPanel).apply();
+		else if (getPrimaryType() == "Boiler")
+			((HvacBoiler) this.BoilerPanel).apply();
+		else if (getPrimaryType() == "HeatPump")
+			((HvacHeatPump) this.HeatPumpPanel).apply();
+		 */
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == this.PrimarySystemComboBox) {
+			if (getPrimaryType() == "Chiller")
+				setVisibleChillerPanel();
+			else if (getPrimaryType() == "Boiler")
+				setVisibleBoilerPanel();
+			else if (getPrimaryType() == "HeatPump")
+				setVisibleHeatPumpPanel();
+		}
+		
+		if (arg0.getSource() == this.HVACRadioButton1) {
+			PrimarySystemComboBox.setEnabled(false);
+			setVisibleAutomaticPanel();
+		}
+		
+		if (arg0.getSource() == this.HVACRadioButton2) {
+			PrimarySystemComboBox.setEnabled(true);
+			if (getPrimaryType() == "Chiller")
+				setVisibleChillerPanel();
+			else if (getPrimaryType() == "Boiler")
+				setVisibleBoilerPanel();
+			else if (getPrimaryType() == "HeatPump")
+				setVisibleHeatPumpPanel();
+		}
+		
 	}
 }

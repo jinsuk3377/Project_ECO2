@@ -91,6 +91,7 @@ public class Info {
 	}
 	
 	public void setValues() {
+		/*
 		roof_area = area / floor;
 		floor_area = area / floor;
 		for (int i = 0; i < 4; i++) {
@@ -98,6 +99,7 @@ public class Info {
 			window_area += each_window_area[i];
 			wall_area += each_wall_area[i];
 		}
+		*/
 	}
 	
 	public String getBuildingName() {

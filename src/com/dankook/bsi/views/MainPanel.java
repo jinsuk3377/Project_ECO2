@@ -34,7 +34,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		createInfoGbXmlPanel();
 		
 		setLayout(null);
-		setSize(800, 800);
+		setSize(800, 950);
 
 		refreshView();
 	}
@@ -50,7 +50,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	
 	private void createInfoGbXmlPanel() {
 		infoGbXmlPanel = new InfoGbXml_Panel();
-		infoGbXmlPanel.setSize(660, 500);
+		infoGbXmlPanel.setSize(660, 660);
 		infoGbXmlPanel.setToolTipText("");
 		infoGbXmlPanel.setModel(_model);
 		infoGbXmlPanel.setLocation(10, 150);
@@ -60,7 +60,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	private void createSimulationButton() {
 		simulationButton.setForeground(SystemColor.desktop);
 		simulationButton.setFont(new Font("Consolas", 0, 13));
-		simulationButton.setBounds(535, 660, 132, 28);
+		simulationButton.setBounds(535, 820, 132, 28);
 		simulationButton.addActionListener(this);
 		add(simulationButton);
 	}
