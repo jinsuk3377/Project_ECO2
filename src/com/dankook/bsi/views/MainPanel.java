@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.dankook.bsi.graph.BarChartDemo;
+import com.dankook.bsi.util.geometry.*;
 import com.dankook.bsi.model.*;
 import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.dataprocessing.*;

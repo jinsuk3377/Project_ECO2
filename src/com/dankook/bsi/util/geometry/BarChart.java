@@ -1,4 +1,4 @@
-package com.dankook.bsi.graph;
+package com.dankook.bsi.util.geometry;
 import java.util.ArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
