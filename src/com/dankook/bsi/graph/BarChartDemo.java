@@ -77,7 +77,17 @@ public class BarChartDemo {
 		
 		return dataSet;
 	}
+	
+	public void start() {
+		final JFreeChart chart = new BarChartDemo().getChart();
+		ChartFrame cf = new ChartFrame("월별 에너지 요구량 및 소요량", chart);
+		cf.pack();
+		RefineryUtilities.centerFrameOnScreen(cf);
+		cf.setSize(800, 600);
+		cf.setVisible(true);
+	}
 
+	/*
 	public static void main(String[] args) {
 		final JFreeChart chart = new BarChartDemo().getChart();
 		ChartFrame cf = new ChartFrame("월별 에너지 요구량 및 소요량", chart);
@@ -86,5 +96,6 @@ public class BarChartDemo {
 		cf.setSize(400, 400);
 		cf.setVisible(true);
 	}
+	*/
 
 }

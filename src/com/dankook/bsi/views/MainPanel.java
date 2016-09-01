@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.dankook.bsi.graph.BarChartDemo;
 import com.dankook.bsi.model.*;
 import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.dataprocessing.*;
@@ -20,6 +21,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	private static final long serialVersionUID = 1L;
 	private LoadGbXml_Panel loadGbXmlPanel;
 	private InfoGbXml_Panel infoGbXmlPanel;
+	private BarChartDemo barchartDemo;
 	//private GbXmltoBIX gbxmltoBIX = new GbXmltoBIX();
 	
 	public final JButton simulationButton = new JButton("Simulation");
@@ -28,6 +30,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 	public MainPanel(Ui_Model model) {
 		this._model = model;
+		barchartDemo = new BarChartDemo();
 		
 		createLoadGbXmlPanel();
 		createSimulationButton();
@@ -64,10 +67,6 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		simulationButton.addActionListener(this);
 		add(simulationButton);
 	}
-	
-	public void actionPerformed(ActionEvent e) {
-		
-	}
 
 	public void update(Object eventDispatcher) {
 		refreshView();
@@ -81,6 +80,14 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 	private void updateSimulationButton() {
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() == this.simulationButton) {
+			barchartDemo.start();
+		}
 	}
 
 	/*
