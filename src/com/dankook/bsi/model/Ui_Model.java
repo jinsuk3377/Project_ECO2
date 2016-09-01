@@ -1,5 +1,7 @@
 package com.dankook.bsi.model;
 
+import java.io.IOException;
+
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -7,14 +9,18 @@ import com.dankook.bsi.exception.*;
 import com.dankook.bsi.util.GBXmlReader;
 import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.util.greenbuilding.GBXmlContext;
+import com.dankook.bsi.views.dataprocessing.ReadGbXml;
 
 public class Ui_Model implements Ui_Observer {
 	private GBXmlContext gbxml;
+	private Info info;
+	private ReadGbXml readGbXml;
 	private static String gbxmlFilePath = "";
 	private static String BIXFilePath = "";
 
 	public Ui_Model() {
 		this.gbxml = null;
+		this.info = null;
 	}
 
 	public String getGbxmlFileExtention() {
@@ -36,6 +42,23 @@ public class Ui_Model implements Ui_Observer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setInfo() {
+		info = new Info();
+		info.setGbxmlFilePath(gbxmlFilePath);
+	}
+	
+	public Info getInfo() {
+		return info;
+	}
+	
+	public ReadGbXml getReadGbXml() {
+		return readGbXml;
+	}
+
+	public void setReadGbXml() throws IOException, SAXException {
+		this.readGbXml = new ReadGbXml(info);
 	}
 
 	public boolean loadedGbxmlFile() {
@@ -65,11 +88,12 @@ public class Ui_Model implements Ui_Observer {
 	public String getGbxmlFilePath() {
 		return this.gbxmlFilePath;
 	}
-
+	
 	@Override
 	public void update(Object paramObject) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

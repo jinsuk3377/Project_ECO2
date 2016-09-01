@@ -161,7 +161,9 @@ public class InfoGbXml_Panel extends JPanel implements ActionListener {
 	private JTextField geothlermaHeatPumpEfficiencyTextField;
 	private JLabel geothlermaHeatPumpEfficiencyUnitLabel;
 	
-	public InfoGbXml_Panel() {
+	public InfoGbXml_Panel(Ui_Model model) {
+		_model = model;
+		
 		setLayout(null);
 		setBounds(10, 10, 770, 450);
 

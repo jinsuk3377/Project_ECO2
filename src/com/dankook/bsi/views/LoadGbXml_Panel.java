@@ -16,16 +16,21 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.dankook.bsi.exception.GBXmlValidationError;
+import com.dankook.bsi.model.Info;
 import com.dankook.bsi.model.Ui_Model;
+import com.dankook.bsi.views.dataprocessing.ReadGbXml;
 
 public class LoadGbXml_Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	
 	private JTextField outputTextField;
 	private JButton _loadFileBtn;
 	Ui_Model _model;
 	private String gbxmlFilePath = "";
 
-	public LoadGbXml_Panel() {
+	public LoadGbXml_Panel(Ui_Model model) {
+		_model = model;
+		
 		setToolTipText("gbXml 파일을 가져와서 아래 단계에 그 값을 뿌려줍니다.");
 		setLayout(null);
 		setBounds(10, 10, 770, 58);
@@ -53,6 +58,7 @@ public class LoadGbXml_Panel extends JPanel {
 		});
 		this._loadFileBtn.setBounds(600, 53, 45, 25);
 		add(this._loadFileBtn);
+		
 	}
 
 	public void setModel(Ui_Model model) {
@@ -69,6 +75,8 @@ public class LoadGbXml_Panel extends JPanel {
 			try {
 				this._model.openGbxmlFile(gbxmlFilePath);
 				_model.setGbxmlFilePath(outputTextField.getText());
+				_model.setInfo();
+				_model.setReadGbXml();
 			} catch (GBXmlValidationError e) {
 				JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
 						"ValidationError", 0);

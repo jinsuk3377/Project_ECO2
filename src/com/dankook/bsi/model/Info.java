@@ -6,10 +6,11 @@ enum CoolingSystemType {압축식, 흡수식, EHP};
 
 public class Info {
 	
-	private String buildingName;
-	private String buildingAddr;
-	private double area; //GFA
-	private int floor;
+	private String gbxmlFilePath = "";
+	
+	private String buildingName; //USER
+	private double area; //GFA, USER
+	private int floor; //USER
 	
 	private double roof_area;
 	private double floor_area;
@@ -17,15 +18,15 @@ public class Info {
 	private double wall_area;
 	private double window_area;
 	
-	private double H_T_wall;
-	private double H_T_window;
-	private double H_T_roof;
-	private double H_T_floor;
-	private double SHGC;
+	private double H_T_wall; //열관류율 USER
+	private double H_T_window; //USER
+	private double H_T_roof; //USER
+	private double H_T_floor; //USER
+	private double SHGC; //USER
 	
-	private double [] each_shell_area;	//외피면적
-	private double [] each_wall_area;	//벽체면적
-	private double [] each_window_area;	//창면적
+	private double [] each_shell_area;	//외피면적, USER
+	private double [] each_wall_area;	//벽체면적, USER
+	private double [] each_window_area;	//창면적, USER
 	
 	private HeatingSystemType HeatingSystem;
 	private HeatingPumpSystemType HeatingPumpSystemType;
@@ -107,12 +108,6 @@ public class Info {
 	}
 	public void setBuildingName(String buildingName) {
 		this.buildingName = buildingName;
-	}
-	public String getBuildingAddr() {
-		return buildingAddr;
-	}
-	public void setBuildingAddr(String buildingAddr) {
-		this.buildingAddr = buildingAddr;
 	}
 	public double getArea() {
 		return area;
@@ -440,6 +435,14 @@ public class Info {
 	}
 	public double[] getI_s_n() {
 		return I_s_n;
+	}
+
+	public String getGbxmlFilePath() {
+		return gbxmlFilePath;
+	}
+
+	public void setGbxmlFilePath(String gbxmlFilePath) {
+		this.gbxmlFilePath = gbxmlFilePath;
 	}
 	
 }
