@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 
 import com.dankook.bsi.model.Info;
 
-public class ReadGbXml {
+public class ReadGbXml extends Thread {
 
 	private Info _info;
 	
@@ -52,6 +52,10 @@ public class ReadGbXml {
         if(doc != null)
         	getNode(doc);
         
+	}
+	
+	public void run() {
+		
 	}
 	
 	public void getNode(Node node) throws IOException {

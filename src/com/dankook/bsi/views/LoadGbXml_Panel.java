@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -14,18 +15,24 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import com.dankook.bsi.exception.GBXmlValidationError;
 import com.dankook.bsi.model.Info;
 import com.dankook.bsi.model.Ui_Model;
+import com.dankook.bsi.views.dataprocessing.GbXmltoBIX;
 import com.dankook.bsi.views.dataprocessing.ReadGbXml;
 
 public class LoadGbXml_Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	private GbXmltoBIX gbxmltobix;
 	private JTextField outputTextField;
 	private JButton _loadFileBtn;
-	Ui_Model _model;
+	private Ui_Model _model;
 	private String gbxmlFilePath = "";
 
 	public LoadGbXml_Panel(Ui_Model model) {
@@ -54,6 +61,7 @@ public class LoadGbXml_Panel extends JPanel {
 		this._loadFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoadGbXml_Panel.this.loadFile();
+				LoadGbXml_Panel.this.convertFile();
 			}
 		});
 		this._loadFileBtn.setBounds(600, 53, 45, 25);
@@ -74,9 +82,9 @@ public class LoadGbXml_Panel extends JPanel {
 			String gbxmlFilePath = fileChooser.getSelectedFile().toString();
 			try {
 				this._model.openGbxmlFile(gbxmlFilePath);
-				_model.setGbxmlFilePath(outputTextField.getText());
+				_model.setGbxmlFilePath(gbxmlFilePath);
 				_model.setInfo();
-				_model.setReadGbXml();
+				outputTextField.setText(gbxmlFilePath);
 			} catch (GBXmlValidationError e) {
 				JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
 						"ValidationError", 0);
@@ -85,6 +93,16 @@ public class LoadGbXml_Panel extends JPanel {
 
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void convertFile() {
+		try {
+			gbxmltobix = new GbXmltoBIX(_model);
+			gbxmltobix.start();
+		} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
