@@ -26,46 +26,64 @@ import com.dankook.bsi.model.Info;
 public class ReadGbXml extends Thread {
 
 	private Info _info;
-	
+
 	private DOMParser parser;
 	private Document doc;
-	private NodeList nList;
-	private Node nNode;
-	
+
 	public ReadGbXml(Info info) throws IOException, SAXException {
 		_info = info;
 		StartReadGbXml();
 	}
-	
+
 	public void StartReadGbXml() throws SAXException, IOException {
-        
+
 		parser = new DOMParser();
-		//parser.parse(_info.getGbxmlFilePath());   //XML문서 파싱
+		// parser.parse(_info.getGbxmlFilePath()); //XML문서 파싱
 		parser.parse("test.xml");
-        doc = parser.getDocument();
-        doc.getDocumentElement().normalize();
-        
-        //nList = doc.getElementsByTagName("Campus");
-        
-        if(_info.getArea()==0) getNode(doc.getChildNodes(), "Area");
-        
+		doc = parser.getDocument();
+		doc.getDocumentElement().normalize();
+
+		// nList = doc.getElementsByTagName("Campus");
+
+		if (_info.getArea() == 0)
+			getNode("Area");
+
 	}
-	
+
 	public void run() {
-		
+
 	}
-	
-	public void getNode(NodeList nodeList, String what) throws IOException {
+
+	public void getNode(String what) throws IOException {
+		
+		Element element;
 		
 		if(what.equals("Area")) {
-			nodeList = doc.getElementsByTagName("Campus");
+			NodeList nList = doc.getElementsByTagName("Campus");
+			NodeList nodeList;
+			for(int i=0; i<nList.getLength(); i++) {
+				element = (Element) nList.item(i);
+				
+				if(element.hasChildNodes()) {
+					nodeList = element.getElementsByTagName("Building");
+					
+					for(int j=0; j<nodeList.getLength(); j++) {
+						Element temp = (Element) nodeList.item(j);
+						
+						if(temp.hasChildNodes()) {
+							NodeList area = temp.getElementsByTagName("area");
+							Double d = Double.parseDouble(area.item(0).getTextContent());
+							_info.setArea(d);
+							System.out.println(_info.getArea());
+							return;
+						}
+					}
+				}
+				
+			}
+				
 		}
-		
-	    //int type = node.getNodeType();
-	    
-	    for (int i=0; i<nList.getLength(); i++) {
-	    	
-	    }
+
 	    /*
 	    switch(type) {
 	        case Node.DOCUMENT_NODE:   // NODE가 DOCUMENT_NODE인 경우 
@@ -103,11 +121,9 @@ public class ReadGbXml extends Thread {
 	    }
 	    */
 	}
-	
-	//public void get
-	
-	public static void main(String[] args) throws IOException, SAXException{
-		
+
+	public static void main(String[] args) throws IOException, SAXException {
+
 		Info info = new Info();
 		ReadGbXml readgbxml = new ReadGbXml(info);
 	}
