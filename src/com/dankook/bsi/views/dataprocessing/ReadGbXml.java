@@ -22,17 +22,17 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.dankook.bsi.model.Info;
+import com.dankook.bsi.model.Ui_Model;
 
 public class ReadGbXml extends Thread {
 
-	private Info _info;
+	private Ui_Model _model;
 
 	private DOMParser parser;
 	private Document doc;
 
-	public ReadGbXml(Info info) throws IOException, SAXException {
-		_info = info;
-		StartReadGbXml();
+	public ReadGbXml(Ui_Model model) throws IOException, SAXException {
+		_model = model;
 	}
 
 	public void StartReadGbXml() throws SAXException, IOException {
@@ -45,7 +45,7 @@ public class ReadGbXml extends Thread {
 
 		// nList = doc.getElementsByTagName("Campus");
 
-		if (_info.getArea() == 0)
+		if (_model.getInfo().getArea() == 0)
 			getNode("Area");
 
 	}
@@ -71,17 +71,16 @@ public class ReadGbXml extends Thread {
 						Element temp = (Element) nodeList.item(j);
 						
 						if(temp.hasChildNodes()) {
-							NodeList area = temp.getElementsByTagName("area");
+							NodeList area = temp.getElementsByTagName("Area");
 							Double d = Double.parseDouble(area.item(0).getTextContent());
-							_info.setArea(d);
-							System.out.println(_info.getArea());
+							_model.getInfo().setArea(d);
+							System.out.println(_model.getInfo().getArea());
 							return;
 						}
 					}
 				}
 				
 			}
-				
 		}
 
 	    /*
@@ -122,9 +121,4 @@ public class ReadGbXml extends Thread {
 	    */
 	}
 
-	public static void main(String[] args) throws IOException, SAXException {
-
-		Info info = new Info();
-		ReadGbXml readgbxml = new ReadGbXml(info);
-	}
 }

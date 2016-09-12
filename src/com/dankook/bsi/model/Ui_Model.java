@@ -17,7 +17,6 @@ import com.dankook.bsi.views.dataprocessing.ReadGbXml;
 public class Ui_Model implements Ui_Observer {
 	private GBXmlContext gbxml;
 	private Info info;
-	private ReadGbXml readGbXml;
 	private static String gbxmlFilePath = "";
 	private static String BIXFilePath = "";
 
@@ -54,14 +53,6 @@ public class Ui_Model implements Ui_Observer {
 	
 	public Info getInfo() {
 		return info;
-	}
-	
-	public ReadGbXml getReadGbXml() {
-		return readGbXml;
-	}
-
-	public void setReadGbXml() throws IOException, SAXException {
-		this.readGbXml = new ReadGbXml(info);
 	}
 
 	public boolean loadedGbxmlFile() {

@@ -36,7 +36,7 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 	public Ui_Main() {
 		
 		_model = new Ui_Model();
-		mainPanel = new MainPanel(this._model);
+		mainPanel = new MainPanel(_model);
 
 		add(mainPanel);
 		setMenuBar();
