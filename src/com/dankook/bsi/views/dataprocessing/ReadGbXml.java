@@ -32,11 +32,8 @@ public class ReadGbXml extends Thread {
 	private NodeList nList;
 	private Node nNode;
 	
-	private FileWriter reader;
-	
 	public ReadGbXml(Info info) throws IOException, SAXException {
 		_info = info;
-		reader = new FileWriter("test.xml");
 		StartReadGbXml();
 	}
 	
@@ -44,13 +41,13 @@ public class ReadGbXml extends Thread {
         
 		parser = new DOMParser();
 		//parser.parse(_info.getGbxmlFilePath());   //XML문서 파싱
-		parser.parse("HD(gbXML).xml");
+		parser.parse("test.xml");
         doc = parser.getDocument();
         doc.getDocumentElement().normalize();
         
-        //nList = doc.getElementsByTagName("gbXML");
-        if(doc != null)
-        	getNode(doc);
+        //nList = doc.getElementsByTagName("Campus");
+        
+        if(_info.getArea()==0) getNode(doc.getChildNodes(), "Area");
         
 	}
 	
@@ -58,9 +55,18 @@ public class ReadGbXml extends Thread {
 		
 	}
 	
-	public void getNode(Node node) throws IOException {
+	public void getNode(NodeList nodeList, String what) throws IOException {
 		
-	    int type = node.getNodeType();
+		if(what.equals("Area")) {
+			nodeList = doc.getElementsByTagName("Campus");
+		}
+		
+	    //int type = node.getNodeType();
+	    
+	    for (int i=0; i<nList.getLength(); i++) {
+	    	
+	    }
+	    /*
 	    switch(type) {
 	        case Node.DOCUMENT_NODE:   // NODE가 DOCUMENT_NODE인 경우 
 	        	 //reader.write("DOC: " + node.getNodeName() + "\n");
@@ -68,10 +74,10 @@ public class ReadGbXml extends Thread {
 	             getNode(d.getDocumentElement());   
 	             break;
 	        case Node.ELEMENT_NODE:   // NODE가 ELEMENT_NODE인 경우 
-	        	 reader.write("ELEMENT: " + node.getNodeName() + "\n");
-	        	 
-	        	 if(node.getNodeName().equals("Location")) {
-	        		 
+	        	 //reader.write("ELEMENT: " + node.getNodeName() + "\n");
+	        	
+	        	 if(_info.getArea() == 0) {
+	        		 ;
 	        	 }
 	        	 else if(node.getNodeName().equals("Building")) {
 	        		 
@@ -95,6 +101,7 @@ public class ReadGbXml extends Thread {
 	             }
 	             break;
 	    }
+	    */
 	}
 	
 	//public void get
