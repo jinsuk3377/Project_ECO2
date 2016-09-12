@@ -8,7 +8,6 @@ public class Info {
 	
 	private String gbxmlFilePath = "";
 	
-	private String buildingName; //USER
 	private double area; //GFA, USER
 	private int floor; //USER
 	
@@ -103,12 +102,6 @@ public class Info {
 		*/
 	}
 	
-	public String getBuildingName() {
-		return buildingName;
-	}
-	public void setBuildingName(String buildingName) {
-		this.buildingName = buildingName;
-	}
 	public double getArea() {
 		return area;
 	}

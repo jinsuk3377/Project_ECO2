@@ -8,6 +8,9 @@ import org.xml.sax.SAXException;
 import com.dankook.bsi.exception.*;
 import com.dankook.bsi.util.GBXmlReader;
 import com.dankook.bsi.util.Ui_Observer;
+import com.dankook.bsi.util.geometry.BarChartDemo;
+import com.dankook.bsi.util.geometry.BarChartDemo2;
+import com.dankook.bsi.util.geometry.BarChartDemo3;
 import com.dankook.bsi.util.greenbuilding.GBXmlContext;
 import com.dankook.bsi.views.dataprocessing.ReadGbXml;
 

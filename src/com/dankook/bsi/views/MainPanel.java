@@ -22,6 +22,8 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	private LoadGbXml_Panel loadGbXmlPanel;
 	private InfoGbXml_Panel infoGbXmlPanel;
 	private BarChartDemo barchartDemo;
+	private BarChartDemo2 barchartDemo2;
+	private BarChartDemo3 barchartDemo3;
 	//private GbXmltoBIX gbxmltoBIX = new GbXmltoBIX();
 	
 	public final JButton simulationButton = new JButton("Simulation");
@@ -30,7 +32,9 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 	public MainPanel(Ui_Model model) {
 		this._model = model;
-		barchartDemo = new BarChartDemo();
+		barchartDemo = new BarChartDemo(getName());
+		barchartDemo2 = new BarChartDemo2(getName());
+		barchartDemo3 = new BarChartDemo3(getName());
 		
 		createLoadGbXmlPanel();
 		createSimulationButton();
@@ -87,6 +91,8 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		
 		if (e.getSource() == this.simulationButton) {
 			barchartDemo.start();
+			barchartDemo2.start();
+			barchartDemo3.start();
 		}
 	}
 

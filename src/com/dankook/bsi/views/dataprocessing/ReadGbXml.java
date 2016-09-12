@@ -34,10 +34,9 @@ public class ReadGbXml extends Thread {
 	
 	private FileWriter reader;
 	
-	
 	public ReadGbXml(Info info) throws IOException, SAXException {
 		_info = info;
-		reader = new FileWriter("test.txt");
+		reader = new FileWriter("test.xml");
 		StartReadGbXml();
 	}
 	
@@ -47,6 +46,7 @@ public class ReadGbXml extends Thread {
 		//parser.parse(_info.getGbxmlFilePath());   //XML문서 파싱
 		parser.parse("HD(gbXML).xml");
         doc = parser.getDocument();
+        doc.getDocumentElement().normalize();
         
         //nList = doc.getElementsByTagName("gbXML");
         if(doc != null)
@@ -79,27 +79,13 @@ public class ReadGbXml extends Thread {
 	        	 else if(node.getNodeName().equals("")) {
 	        		 
 	        	 }
-	        	 else if(node.getNodeName().equals("")) {
-	        		 
-	        	 }
-	        	 else if(node.getNodeName().equals("")) {
-	        		 
-	        	 }
-	        	 else if(node.getNodeName().equals("")) {
-	        		 
-	        	 }
-	        	 else if(node.getNodeName().equals("")) {
-	        		 
-	        	 }
-	        	 else if(node.getNodeName().equals("")) {
-	        		 
-	        	 }
 	        	 
 	             NamedNodeMap attrs = node.getAttributes();
 	             int len = attrs.getLength();
 	             for(int i=0; i < len; i++) {
 	            	 getNode(attrs.item(i));
 	             }
+	             
 	             NodeList children = node.getChildNodes();
 	             if(children != null) {
 	                  int n = children.getLength();
