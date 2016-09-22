@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.xpath.XPathAPI;
 
@@ -45,11 +46,14 @@ public class ReadGbXml extends Thread {
 
 		// nList = doc.getElementsByTagName("Campus");
 
-		if (_model.getInfo().getArea() == 0)
+		if (_model.getInfo().getArea() == 0) {
 			getNode("Area");
+			getNode("U-value");
+		}
+			
 
 	}
-
+	
 	public void run() {
 
 	}
@@ -73,13 +77,47 @@ public class ReadGbXml extends Thread {
 						if(temp.hasChildNodes()) {
 							NodeList area = temp.getElementsByTagName("Area");
 							Double d = Double.parseDouble(area.item(0).getTextContent());
-							_model.getInfo().setArea(d);
-							System.out.println(_model.getInfo().getArea());
-							return;
+							if(d != 0) {
+								_model.getInfo().setArea(d);
+								System.out.println(_model.getInfo().getArea());
+								return;
+							}
 						}
 					}
 				}
+			}
+		}
+		
+		else if(what.equals("U-value")) {
+			NodeList nList = doc.getElementsByTagName("Envelope");
+			NodeList nodeList, nodeAttrList;
+			
+			ArrayList<String> iArrayList = new ArrayList<String>(); //Construction id
+			ArrayList<Double> uArrayList = new ArrayList<Double>(); //Construction U-Value
+			
+			for(int i=0; i<nList.getLength(); i++) {
+				element = (Element) nList.item(i);
 				
+				if(element.hasChildNodes()) {
+					nodeList = element.getElementsByTagName("Construction");
+					
+					for(int j=0; j<nodeList.getLength(); j++) {
+						Element temp = (Element) nodeList.item(j);
+						String id = temp.getAttribute("id");
+						
+						NodeList uvalue = temp.getElementsByTagName("U-value");
+						Node u = uvalue.item(0);
+						if(u.hasChildNodes()) {
+							Double d = Double.parseDouble(u.getTextContent());
+							if(d != 0) {
+								System.out.println(id);
+								System.out.println(d);
+								iArrayList.add(id);
+								uArrayList.add(d);
+							}
+						}
+					}
+				}
 			}
 		}
 
