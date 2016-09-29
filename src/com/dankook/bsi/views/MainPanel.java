@@ -24,7 +24,6 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	private static final long serialVersionUID = 1L;
 	private LoadGbXml_Panel loadGbXmlPanel;
 	private InfoGbXml_Panel infoGbXmlPanel;
-	private ReadGbXml readGbXml;
 	private BarChartDemo barchartDemo;
 	private BarChartDemo2 barchartDemo2;
 	private BarChartDemo3 barchartDemo3;
@@ -36,12 +35,6 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 	public MainPanel(Ui_Model model) {
 		this._model = model;
-		try {
-			readGbXml = new ReadGbXml(_model);
-		} catch (IOException | SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		barchartDemo = new BarChartDemo(getName());
 		barchartDemo2 = new BarChartDemo2(getName());
 		barchartDemo3 = new BarChartDemo3(getName());
@@ -100,11 +93,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == this.simulationButton) {
-			try {
-				readGbXml.StartReadGbXml();
-			} catch (SAXException | IOException e1) {
-				e1.printStackTrace();
-			}
+			_model.setInfoValues();
 			barchartDemo.start();
 			barchartDemo2.start();
 			barchartDemo3.start();

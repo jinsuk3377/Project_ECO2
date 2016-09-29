@@ -54,6 +54,10 @@ public class Ui_Model implements Ui_Observer {
 	public Info getInfo() {
 		return info;
 	}
+	
+	public void setInfoValues() {
+		info.setValues();
+	}
 
 	public boolean loadedGbxmlFile() {
 		return !getGbxmlFilePath().equals("");

@@ -25,7 +25,7 @@ import org.xml.sax.SAXException;
 import com.dankook.bsi.model.Info;
 import com.dankook.bsi.model.Ui_Model;
 
-public class ReadGbXml extends Thread {
+public class ReadGbXml {
 
 	private Ui_Model _model;
 
@@ -39,20 +39,13 @@ public class ReadGbXml extends Thread {
 	public void StartReadGbXml() throws SAXException, IOException {
 
 		parser = new DOMParser();
-		// parser.parse(_info.getGbxmlFilePath()); //XML문서 파싱
 		parser.parse("test.xml");
 		doc = parser.getDocument();
 		doc.getDocumentElement().normalize();
 
-		// nList = doc.getElementsByTagName("Campus");
-
 		if (_model.getInfo().getArea() == 0) {
 			getNode();
 		}
-
-	}
-
-	public void run() {
 
 	}
 
@@ -70,10 +63,12 @@ public class ReadGbXml extends Thread {
 		ArrayList<Double> wuArrayList = new ArrayList<Double>(); // Window U-Value
 		ArrayList<Double> wshgcArrayList = new ArrayList<Double>(); // window SHGC unit="Fraction"
 
-		double[] each_shell_area = { 0, 0, 0, 0 }; // 외피면적, index 순서 N,E,S,W
-		double[] each_wall_area = { 0, 0, 0, 0 }; // 벽체면적, index 순서 N,E,S,W
-		double[] each_window_area = { 0, 0, 0, 0 }; // 창면적, index 순서 N,E,S,W
+		double[] each_shell_area = { 0, 0, 0, 0 }; // 외피면적, index 순서 S,W,N,E
+		double[] each_wall_area = { 0, 0, 0, 0 }; // 벽체면적, index 순서 S,W,N,E
+		double[] each_window_area = { 0, 0, 0, 0 }; // 창면적, index 순서 S,W,N,E
 		double total_area = 0;
+		double roof_area = 0;
+		int floor = 0;
 
 		for (int i = 0; i < nList.getLength(); i++) {
 			element = (Element) nList.item(i);
@@ -140,7 +135,7 @@ public class ReadGbXml extends Thread {
 						String cid = temp.getAttribute("constructionIdRef");
 						if (cid != null) {
 							int index = iArrayList.indexOf(cid);
-							_model.getInfo().setH_T_wall(iuArrayList.get(index));
+							_model.getInfo().setU_wall(iuArrayList.get(index));
 						} else {
 							System.out.println("Error ExteriorWall constructionIdRef");
 						}
@@ -152,7 +147,7 @@ public class ReadGbXml extends Thread {
 							String wid = w.getAttribute("windowTypeIdRef");
 							if (wid != null) {
 								int index = wArrayList.indexOf(wid);
-								_model.getInfo().setH_T_window(wuArrayList.get(index));
+								_model.getInfo().setU_window(wuArrayList.get(index));
 								_model.getInfo().setSHGC(wshgcArrayList.get(index));
 							} else {
 								System.out.println("Error ExteriorWall Opening windowTypeIdRef");
@@ -178,14 +173,16 @@ public class ReadGbXml extends Thread {
 								return;
 							}
 
-							if (name.equals("N")) {
+							if (name.equals("S")) {
 								each_window_area[0] += area;
-							} else if (name.equals("E")) {
-								each_window_area[1] += area;
-							} else if (name.equals("S")) {
-								each_window_area[2] += area;
 							} else if (name.equals("W")) {
+								each_window_area[1] += area;
+							} else if (name.equals("N")) {
+								each_window_area[2] += area;
+							} else if (name.equals("E")) {
 								each_window_area[3] += area;
+							} else {
+								System.out.println("Error Opening Name");
 							}
 						}
 
@@ -216,20 +213,42 @@ public class ReadGbXml extends Thread {
 							return;
 						}
 
-						if (name.equals("N")) {
+						if (name.equals("S")) {
 							each_shell_area[0] += area;
-						} else if (name.equals("E")) {
-							each_shell_area[1] += area;
-						} else if (name.equals("S")) {
-							each_shell_area[2] += area;
 						} else if (name.equals("W")) {
+							each_shell_area[1] += area;
+						} else if (name.equals("N")) {
+							each_shell_area[2] += area;
+						} else if (name.equals("E")) {
 							each_shell_area[3] += area;
+						} else {
+							System.out.println("Error ExteriorWall Name");
 						}
+						
 					} else if (type.equals("InteriorFloor")) {
 						String cid = temp.getAttribute("constructionIdRef");
 						if (cid != null) {
 							int index = iArrayList.indexOf(cid);
-							_model.getInfo().setH_T_floor(iuArrayList.get(index));
+							_model.getInfo().setU_floor(iuArrayList.get(index));
+							
+							NodeList shellNodeList = temp.getElementsByTagName("RectangularGeometry");
+							double area = 0;
+							Node width = null, height = null;
+
+							for (int l = 0; l < shellNodeList.getLength(); l++) {
+								Element a = (Element) shellNodeList.item(l);
+								width = a.getElementsByTagName("Width").item(0);
+								height = a.getElementsByTagName("Height").item(0);
+							}
+
+							area = Double.parseDouble(width.getTextContent()) * Double.parseDouble(height.getTextContent());
+							if (area == 0) {
+								System.out.println("Error InteriorFloor RectangularGeometry width * height = 0");
+								return;
+							}
+							total_area += area;
+							//floor++;
+
 						} else {
 							System.out.println("Error InteriorFloor constructionIdRef");
 						}
@@ -237,7 +256,25 @@ public class ReadGbXml extends Thread {
 						String cid = temp.getAttribute("constructionIdRef");
 						if (cid != null) {
 							int index = iArrayList.indexOf(cid);
-							_model.getInfo().setH_T_roof(iuArrayList.get(index));
+							_model.getInfo().setU_roof(iuArrayList.get(index));
+							
+							NodeList shellNodeList = temp.getElementsByTagName("RectangularGeometry");
+							double area = 0;
+							Node width = null, height = null;
+
+							for (int l = 0; l < shellNodeList.getLength(); l++) {
+								Element a = (Element) shellNodeList.item(l);
+								width = a.getElementsByTagName("Width").item(0);
+								height = a.getElementsByTagName("Height").item(0);
+							}
+
+							area = Double.parseDouble(width.getTextContent()) * Double.parseDouble(height.getTextContent());
+							if (area == 0) {
+								System.out.println("Error Roof RectangularGeometry width * height = 0");
+								return;
+							}
+							roof_area += area;
+							
 						} else {
 							System.out.println("Error InteriorFloor constructionIdRef");
 						}
@@ -245,22 +282,26 @@ public class ReadGbXml extends Thread {
 				}
 			}
 		}
-
+		floor = (int) ( total_area / roof_area );
+		
 		for (int i = 0; i < 4; i++) {
 			each_wall_area[i] = each_shell_area[i] - each_window_area[i];
-			total_area += each_shell_area[i] + each_window_area[i];
 		}
-		
+				
 		_model.getInfo().setEach_shell_area(each_shell_area);
 		_model.getInfo().setEach_wall_area(each_wall_area);
 		_model.getInfo().setEach_window_area(each_window_area);
 		_model.getInfo().setArea(total_area);
+		_model.getInfo().setRoof_area(roof_area);
+		_model.getInfo().setFloor(floor);
 
 		System.out.printf("Area : %-15f\n", _model.getInfo().getArea());
-		System.out.printf("외벽열관류율 : %-15f\n", _model.getInfo().getH_T_wall());
-		System.out.printf("창호열관류율 : %-15f\n", _model.getInfo().getH_T_window());
-		System.out.printf("지붕열관류율 : %-15f\n", _model.getInfo().getH_T_roof());
-		System.out.printf("바닥열관류율 : %-15f\n", _model.getInfo().getH_T_floor());
+		System.out.printf("Roof_Area : %-15f\n", _model.getInfo().getRoof_area());
+		System.out.printf("Floor : %-15d\n", _model.getInfo().getFloor());
+		System.out.printf("외벽열관류율 : %-15f\n", _model.getInfo().getU_wall());
+		System.out.printf("창호열관류율 : %-15f\n", _model.getInfo().getU_window());
+		System.out.printf("지붕열관류율 : %-15f\n", _model.getInfo().getU_roof());
+		System.out.printf("바닥열관류율 : %-15f\n", _model.getInfo().getU_floor());
 		System.out.printf("SHGC : %-15f\n", _model.getInfo().getSHGC());
 		System.out.printf("외피면적(N) : %-12f", _model.getInfo().getEach_shell_area()[0]);
 		System.out.printf("외피면적(E) : %-12f", _model.getInfo().getEach_shell_area()[1]);

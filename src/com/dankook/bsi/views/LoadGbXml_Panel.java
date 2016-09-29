@@ -33,6 +33,7 @@ public class LoadGbXml_Panel extends JPanel {
 	private JTextField outputTextField;
 	private JButton _loadFileBtn;
 	private Ui_Model _model;
+	private ReadGbXml readGbXml;
 	private String gbxmlFilePath = "";
 
 	public LoadGbXml_Panel(Ui_Model model) {
@@ -100,6 +101,9 @@ public class LoadGbXml_Panel extends JPanel {
 		try {
 			gbxmltobix = new GbXmltoBIX(_model);
 			gbxmltobix.start();
+			readGbXml = new ReadGbXml(_model);
+			readGbXml.StartReadGbXml();
+			
 		} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
