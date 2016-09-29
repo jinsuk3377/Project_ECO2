@@ -144,7 +144,7 @@ public class Info {
 	@SuppressWarnings("static-access")
 	public void setValues() {
 
-		//testSetValues();
+		testSetValues();
 		
 		floor_area = roof_area;
 		shell_area = each_shell_area[0]+each_shell_area[1]+each_shell_area[2]+each_shell_area[3];	//외피면적, USER
@@ -343,64 +343,64 @@ public class Info {
 		
 		System.out.printf("난방에너지요구량 :     ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_h_b[i]);
+			System.out.printf("%f  ", Q_h_b[i]);
 		System.out.printf("\n냉방에너지요구량 :     ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_c_b[i]);
+			System.out.printf("%f  ", Q_c_b[i]);
 		System.out.printf("\n급탕에너지요구량 :     ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_w_b[i]);
+			System.out.printf("%f  ", Q_w_b[i]);
 		System.out.printf("\n조명에너지요구량 :     ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_l_b[i]);
+			System.out.printf("%f  ", Q_l_b[i]);
 		System.out.printf("\n난방에너지소요량 전기 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_h_f_elec[i]);
+			System.out.printf("%f  ", Q_h_f_elec[i]);
 		System.out.printf("\n난방에너지소요량 가스 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_h_f_gas[i]);
+			System.out.printf("%f  ", Q_h_f_gas[i]);
 		System.out.printf("\n난방에너지소요량 지역 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_h_f_local[i]);
+			System.out.printf("%f  ", Q_h_f_local[i]);
 		System.out.printf("\n냉방에너지소요량 전기 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_c_f_elec[i]);
+			System.out.printf("%f  ", Q_c_f_elec[i]);
 		System.out.printf("\n냉방에너지소요량 가스 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_c_f_gas[i]);
+			System.out.printf("%f  ", Q_c_f_gas[i]);
 		System.out.printf("\n냉방에너지소요량 지역 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_c_f_local[i]);
+			System.out.printf("%f  ", Q_c_f_local[i]);
 		System.out.printf("\n급탕에너지소요량 전기 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_w_f_elec[i]);
+			System.out.printf("%f  ", Q_w_f_elec[i]);
 		System.out.printf("\n급탕에너지소요량 가스 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_w_f_gas[i]);
+			System.out.printf("%f  ", Q_w_f_gas[i]);
 		System.out.printf("\n급탕에너지소요량 지역 :  ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_w_f_local[i]);
+			System.out.printf("%f  ", Q_w_f_local[i]);
 		System.out.printf("\n조명에너지소요량 :     ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_l_b[i]);
+			System.out.printf("%f  ", Q_l_b[i]);
 		System.out.printf("\n환기에너지소요량 :     ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_v_b[i]);
+			System.out.printf("%f  ", Q_v_b[i]);
 		System.out.printf("\n난방1차에너지소요량 :   ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_h_1[i]);
+			System.out.printf("%f  ", Q_h_1[i]);
 		System.out.printf("\n냉방1차에너지소요량 :   ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_c_1[i]);
+			System.out.printf("%f  ", Q_c_1[i]);
 		System.out.printf("\n급탕1차에너지소요량 :   ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_w_1[i]);
+			System.out.printf("%f  ", Q_w_1[i]);
 		System.out.printf("\n조명1차에너지소요량 :   ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_l_1[i]);
+			System.out.printf("%f  ", Q_l_1[i]);
 		System.out.printf("\n환기1차에너지소요량 :   ");
 		for(int i=1; i<=12; i++) 
-			System.out.printf("%f\t", Q_v_1[i]);
+			System.out.printf("%f  ", Q_v_1[i]);
 	}
 	
 	public double getArea() {

@@ -1,5 +1,6 @@
 package com.dankook.bsi.views;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 import org.xml.sax.SAXException;
 
 import com.dankook.bsi.util.geometry.*;
+import com.dankook.bsi.main.Ui_Main;
 import com.dankook.bsi.model.*;
 import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.dataprocessing.*;
@@ -23,10 +25,11 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	private LoadGbXml_Panel loadGbXmlPanel;
-	private InfoGbXml_Panel infoGbXmlPanel;
-	private BarChartDemo barchartDemo;
-	private BarChartDemo2 barchartDemo2;
-	private BarChartDemo3 barchartDemo3;
+	//private InfoGbXml_Panel infoGbXmlPanel;
+	//private BarChartDemo barchartDemo;
+	//private BarChartDemo2 barchartDemo2;
+	//private BarChartDemo3 barchartDemo3;
+	private BarChartFrame barchartFrame;
 	//private GbXmltoBIX gbxmltoBIX = new GbXmltoBIX();
 	
 	public final JButton simulationButton = new JButton("Simulation");
@@ -35,17 +38,17 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 	public MainPanel(Ui_Model model) {
 		this._model = model;
-		barchartDemo = new BarChartDemo(getName());
-		barchartDemo2 = new BarChartDemo2(getName());
-		barchartDemo3 = new BarChartDemo3(getName());
-		
+		//barchartDemo = new BarChartDemo(getName());
+		//barchartDemo2 = new BarChartDemo2(getName());
+		//barchartDemo3 = new BarChartDemo3(getName());
 		createLoadGbXmlPanel();
 		createSimulationButton();
-		createInfoGbXmlPanel();
+		//createInfoGbXmlPanel();
 		
 		setLayout(null);
-		setSize(800, 950);
-
+		//setSize(800, 950);
+		setSize(800, 300);
+		
 		refreshView();
 	}
 	
@@ -57,7 +60,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		loadGbXmlPanel.setLocation(10, 35);
 		add(loadGbXmlPanel);
 	}
-	
+	/*
 	private void createInfoGbXmlPanel() {
 		infoGbXmlPanel = new InfoGbXml_Panel(_model);
 		infoGbXmlPanel.setSize(660, 660);
@@ -66,11 +69,13 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		infoGbXmlPanel.setLocation(10, 150);
 		add(infoGbXmlPanel);
 	}
+	*/
 	
 	private void createSimulationButton() {
 		simulationButton.setForeground(SystemColor.desktop);
 		simulationButton.setFont(new Font("Consolas", 0, 13));
-		simulationButton.setBounds(535, 820, 132, 28);
+		//simulationButton.setBounds(535, 820, 132, 28);
+		simulationButton.setBounds(535, 170, 132, 28);
 		simulationButton.addActionListener(this);
 		add(simulationButton);
 	}
@@ -93,10 +98,25 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == this.simulationButton) {
-			_model.setInfoValues();
-			barchartDemo.start();
-			barchartDemo2.start();
-			barchartDemo3.start();
+			
+			_model.setInfoValues(); // Simulation
+			
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						barchartFrame = new BarChartFrame(_model);
+						barchartFrame.setTitle("test");
+						barchartFrame.setDefaultCloseOperation(3);
+						barchartFrame.setSize(1000, 700);
+						barchartFrame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			//barchartDemo.start();
+			//barchartDemo2.start();
+			//barchartDemo3.start();
 		}
 	}
 

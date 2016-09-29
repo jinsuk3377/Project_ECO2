@@ -24,7 +24,8 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 					Ui_Main frame = new Ui_Main();
 					frame.setTitle("ECO2 Simulator");
 					frame.setDefaultCloseOperation(3);
-					frame.setSize(700, 900);
+					//frame.setSize(700, 900);
+					frame.setSize(700, 250);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
