@@ -570,4 +570,236 @@ public class Info {
 		this.light_density = light_density;
 	}
 	
+	public double getQ_I_L() {
+		return Q_I_L;
+	}
+
+	public void setQ_I_L(double q_I_L) {
+		Q_I_L = q_I_L;
+	}
+
+	public double getQ_solar() {
+		return Q_solar;
+	}
+
+	public void setQ_solar(double q_solar) {
+		Q_solar = q_solar;
+	}
+
+	public double getQ_T() {
+		return Q_T;
+	}
+
+	public void setQ_T(double q_T) {
+		Q_T = q_T;
+	}
+
+	public double getQ_V() {
+		return Q_V;
+	}
+
+	public void setQ_V(double q_V) {
+		Q_V = q_V;
+	}
+
+	public double getQ_source() {
+		return Q_source;
+	}
+
+	public void setQ_source(double q_source) {
+		Q_source = q_source;
+	}
+
+	public double getQ_sink() {
+		return Q_sink;
+	}
+
+	public void setQ_sink(double q_sink) {
+		Q_sink = q_sink;
+	}
+
+	public double[] getQ_h_b() {
+		return Q_h_b;
+	}
+
+	public void setQ_h_b(double[] q_h_b) {
+		Q_h_b = q_h_b;
+	}
+
+	public double[] getQ_c_b() {
+		return Q_c_b;
+	}
+
+	public void setQ_c_b(double[] q_c_b) {
+		Q_c_b = q_c_b;
+	}
+
+	public double[] getQ_w_b() {
+		return Q_w_b;
+	}
+
+	public void setQ_w_b(double[] q_w_b) {
+		Q_w_b = q_w_b;
+	}
+
+	public double[] getQ_l_b() {
+		return Q_l_b;
+	}
+
+	public void setQ_l_b(double[] q_l_b) {
+		Q_l_b = q_l_b;
+	}
+
+	public double[] getQ_v_b() {
+		return Q_v_b;
+	}
+
+	public void setQ_v_b(double[] q_v_b) {
+		Q_v_b = q_v_b;
+	}
+
+	public double[] getQ_h_f() {
+		return Q_h_f;
+	}
+
+	public void setQ_h_f(double[] q_h_f) {
+		Q_h_f = q_h_f;
+	}
+
+	public double[] getQ_c_f() {
+		return Q_c_f;
+	}
+
+	public void setQ_c_f(double[] q_c_f) {
+		Q_c_f = q_c_f;
+	}
+
+	public double[] getQ_w_f() {
+		return Q_w_f;
+	}
+
+	public void setQ_w_f(double[] q_w_f) {
+		Q_w_f = q_w_f;
+	}
+
+	public double[] getQ_h_f_elec() {
+		return Q_h_f_elec;
+	}
+
+	public void setQ_h_f_elec(double[] q_h_f_elec) {
+		Q_h_f_elec = q_h_f_elec;
+	}
+
+	public double[] getQ_h_f_gas() {
+		return Q_h_f_gas;
+	}
+
+	public void setQ_h_f_gas(double[] q_h_f_gas) {
+		Q_h_f_gas = q_h_f_gas;
+	}
+
+	public double[] getQ_h_f_local() {
+		return Q_h_f_local;
+	}
+
+	public void setQ_h_f_local(double[] q_h_f_local) {
+		Q_h_f_local = q_h_f_local;
+	}
+
+	public double[] getQ_c_f_elec() {
+		return Q_c_f_elec;
+	}
+
+	public void setQ_c_f_elec(double[] q_c_f_elec) {
+		Q_c_f_elec = q_c_f_elec;
+	}
+
+	public double[] getQ_c_f_gas() {
+		return Q_c_f_gas;
+	}
+
+	public void setQ_c_f_gas(double[] q_c_f_gas) {
+		Q_c_f_gas = q_c_f_gas;
+	}
+
+	public double[] getQ_c_f_local() {
+		return Q_c_f_local;
+	}
+
+	public void setQ_c_f_local(double[] q_c_f_local) {
+		Q_c_f_local = q_c_f_local;
+	}
+
+	public double[] getQ_w_f_elec() {
+		return Q_w_f_elec;
+	}
+
+	public void setQ_w_f_elec(double[] q_w_f_elec) {
+		Q_w_f_elec = q_w_f_elec;
+	}
+
+	public double[] getQ_w_f_gas() {
+		return Q_w_f_gas;
+	}
+
+	public void setQ_w_f_gas(double[] q_w_f_gas) {
+		Q_w_f_gas = q_w_f_gas;
+	}
+
+	public double[] getQ_w_f_local() {
+		return Q_w_f_local;
+	}
+
+	public void setQ_w_f_local(double[] q_w_f_local) {
+		Q_w_f_local = q_w_f_local;
+	}
+
+	public double[] getQ_h_1() {
+		return Q_h_1;
+	}
+
+	public void setQ_h_1(double[] q_h_1) {
+		Q_h_1 = q_h_1;
+	}
+
+	public double[] getQ_c_1() {
+		return Q_c_1;
+	}
+
+	public void setQ_c_1(double[] q_c_1) {
+		Q_c_1 = q_c_1;
+	}
+
+	public double[] getQ_w_1() {
+		return Q_w_1;
+	}
+
+	public void setQ_w_1(double[] q_w_1) {
+		Q_w_1 = q_w_1;
+	}
+
+	public double[] getQ_l_1() {
+		return Q_l_1;
+	}
+
+	public void setQ_l_1(double[] q_l_1) {
+		Q_l_1 = q_l_1;
+	}
+
+	public double[] getQ_v_1() {
+		return Q_v_1;
+	}
+
+	public void setQ_v_1(double[] q_v_1) {
+		Q_v_1 = q_v_1;
+	}
+
+	public double getQ_I_p() {
+		return Q_I_p;
+	}
+
+	public double getQ_I_fac() {
+		return Q_I_fac;
+	}
+	
 }
