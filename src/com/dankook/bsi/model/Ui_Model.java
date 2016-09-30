@@ -1,6 +1,8 @@
 package com.dankook.bsi.model;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -24,7 +26,8 @@ public class Ui_Model implements Ui_Observer {
 		this.gbxml = null;
 		this.info = null;
 	}
-
+	
+	
 	public String getGbxmlFileExtention() {
 		return "xml";
 	}

@@ -3,12 +3,17 @@ package com.dankook.bsi.main;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
 import com.dankook.bsi.model.Ui_Model;
 import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.*;
+import com.opencsv.CSVWriter;
 
 public class Ui_Main extends JFrame implements Ui_Observer {
 	
@@ -17,8 +22,8 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 	private MainPanel mainPanel;
 	private JTabbedPane Tab;// add
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+	public static void main(String[] args){
+			EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Ui_Main frame = new Ui_Main();
