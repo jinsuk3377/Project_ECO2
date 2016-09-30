@@ -295,6 +295,10 @@ public class ReadGbXml {
 		_model.getInfo().setRoof_area(roof_area);
 		_model.getInfo().setFloor(floor);
 
+		print();
+	}
+	
+	public void print() {
 		System.out.printf("Area : %-15f\n", _model.getInfo().getArea());
 		System.out.printf("Roof_Area : %-15f\n", _model.getInfo().getRoof_area());
 		System.out.printf("Floor : %-15d\n", _model.getInfo().getFloor());

@@ -403,6 +403,19 @@ public class Info {
 			System.out.printf("%f  ", Q_v_1[i]);
 	}
 	
+	public static String[] parseString(String[] str, double[] array) {
+		
+		String[] strArray = new String[str.length+array.length-1];
+		for(int i=0; i<str.length; i++) {
+			strArray[i] = str[i];
+		}
+		for(int i=0; i<array.length-1; i++) {
+			strArray[i+str.length] = String.valueOf(array[i+1]);
+		}
+		
+		return strArray;
+	}
+	
 	public double getArea() {
 		return area;
 	}
@@ -656,30 +669,6 @@ public class Info {
 
 	public void setQ_v_b(double[] q_v_b) {
 		Q_v_b = q_v_b;
-	}
-
-	public double[] getQ_h_f() {
-		return Q_h_f;
-	}
-
-	public void setQ_h_f(double[] q_h_f) {
-		Q_h_f = q_h_f;
-	}
-
-	public double[] getQ_c_f() {
-		return Q_c_f;
-	}
-
-	public void setQ_c_f(double[] q_c_f) {
-		Q_c_f = q_c_f;
-	}
-
-	public double[] getQ_w_f() {
-		return Q_w_f;
-	}
-
-	public void setQ_w_f(double[] q_w_f) {
-		Q_w_f = q_w_f;
 	}
 
 	public double[] getQ_h_f_elec() {

@@ -40,7 +40,7 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 		
 	}
 	
-	public Ui_Main() {
+	public Ui_Main() throws IOException {
 		
 		_model = new Ui_Model();
 		mainPanel = new MainPanel(_model);
