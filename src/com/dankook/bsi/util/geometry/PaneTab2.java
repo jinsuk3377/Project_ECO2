@@ -20,8 +20,15 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.GradientPaintTransformType;
 import org.jfree.ui.StandardGradientPaintTransformer;
 
+import com.dankook.bsi.model.Ui_Model;
+
 public class PaneTab2 {
 
+	Ui_Model _model;
+	
+	public PaneTab2(Ui_Model model){
+		_model = model;
+	}
 	
     public ChartPanel createPane_tab2() {
     	

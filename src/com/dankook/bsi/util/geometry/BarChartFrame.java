@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Paint;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -56,16 +57,17 @@ public class BarChartFrame extends JFrame {
      * Creates a new demo instance.
      *
      * @param title  the frame title.
+	 * @throws UnsupportedEncodingException 
      */
-    public BarChartFrame (Ui_Model model) {
+    public BarChartFrame (Ui_Model model) throws UnsupportedEncodingException {
 
     	_model = model;
     	
-    	paneTab1 = new PaneTab1();
-    	paneTab2 = new PaneTab2();
-    	paneTab3 = new PaneTab3();
-    	paneTab4 = new PaneTab4();
-    	paneTab5 = new PaneTab5();
+    	paneTab1 = new PaneTab1(_model);
+    	paneTab2 = new PaneTab2(_model);
+    	paneTab3 = new PaneTab3(_model);
+    	paneTab4 = new PaneTab4(_model);
+    	paneTab5 = new PaneTab5(_model);
     	
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	JTabbedPane tabbedPane = new JTabbedPane();
