@@ -35,7 +35,7 @@ public class PaneTab3 {
 
 		// create the chart...
 		final JFreeChart chart = ChartFactory.createBarChart(
-				"설비기기별 난방에너지요구량", // chart title
+				"설비기기별 난방에너지소요량", // chart title
 				"MONTH", // domain axis label
 				"kW/h", // range axis label
 				dataset, // data

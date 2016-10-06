@@ -32,7 +32,7 @@ public class PaneTab5 {
 	public PaneTab5(Ui_Model model) {
 		_model = model;
 	}
-
+	
 	@SuppressWarnings("serial")
 	public ChartPanel createPane_tab5() throws UnsupportedEncodingException {
 
@@ -40,7 +40,7 @@ public class PaneTab5 {
 
 		// create the chart...
 		final JFreeChart chart = ChartFactory.createBarChart(
-				"설비기기별 냉방에너지요구량", // chart title
+				"설비기기별 급탕에너지소요량", // chart title
 				"MONTH", // domain axis label
 				"kW/h", // range axis label
 				dataset, // data
@@ -101,10 +101,10 @@ public class PaneTab5 {
 
 		// row keys...
 		final String[] type = { "전기", "가스", "지역난방" };
-
+		
 		// column keys...
 		final String[] series = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-
+		
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 

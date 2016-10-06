@@ -40,7 +40,7 @@ public class PaneTab2 {
 
 		// create the chart...
 		final JFreeChart chart = ChartFactory.createLineChart(
-				"월별 1차 에너지 소모량", // chart title
+				"월별 1차 에너지 소요량", // chart title
 				"MONTH", // domain axis label
 				"kW/h", // range axis label
 				dataset, // data
@@ -83,7 +83,7 @@ public class PaneTab2 {
 	private CategoryDataset createDataset_tab2() throws UnsupportedEncodingException {
 
 		// row keys...
-		final String[] type = { "난방에너지요구량", "냉방에너지요구량", "급탕에너지요구량", "조명에너지요구량", "환기에너지요구량" };
+		final String[] type = { "난방1차에너지소요량", "냉방1차에너지소요량", "급탕1차에너지소요량", "조명1차에너지소요량", "환기1차에너지소요량" };
 
 		// column keys...
 		final String[] series = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
