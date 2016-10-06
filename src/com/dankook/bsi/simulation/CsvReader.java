@@ -8,15 +8,9 @@ public class CsvReader {
 	private CsvReader reader;
 	
 	public CsvReader(Ui_Model model){
-		String csvFile = "C:\\Users\\XNOTE\\git\\Project_ECO2\\simulationTest.csv";
+		String csvFile = "simulationTest.csv";
 		_model = model;
 		boolean alreadyExists = new File(csvFile).exists();
 	}
-	
-	public void run(){
-		
-	}
-	
-	
 	
 }
