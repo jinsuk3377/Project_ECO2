@@ -2,6 +2,9 @@ package com.dankook.bsi.util.geometry;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.io.UnsupportedEncodingException;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -15,6 +18,7 @@ import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -23,56 +27,67 @@ import com.dankook.bsi.model.Ui_Model;
 
 public class PaneTab5 {
 
-	Ui_Model _model;
-	
-	public PaneTab5(Ui_Model model){
+	private Ui_Model _model;
+
+	public PaneTab5(Ui_Model model) {
 		_model = model;
 	}
-	
-	public ChartPanel createPane_tab5() {
 
-		final CategoryDataset dataset1 = createDataset_tab1_1();
+	@SuppressWarnings("serial")
+	public ChartPanel createPane_tab5() throws UnsupportedEncodingException {
+
+		final CategoryDataset dataset = createDataset_tab5();
 
 		// create the chart...
-		final JFreeChart chart = ChartFactory.createBarChart("에너지 요구량", // chart
-																		// title
-				"월 별", // domain axis label
-				"에너지 요구량", // range axis label
-				dataset1, // data
+		final JFreeChart chart = ChartFactory.createBarChart(
+				"설비기기별 냉방에너지요구량", // chart title
+				"MONTH", // domain axis label
+				"kW/h", // range axis label
+				dataset, // data
 				PlotOrientation.VERTICAL, true, // include legend
 				true, // tooltips?
 				false // URL generator? Not required...
 		);
 
-		// NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
+		chart.getTitle().setFont(new Font("돋움", Font.BOLD, 16));
+		chart.getLegend().setItemFont(new Font("돋움", Font.PLAIN, 10));
 		chart.setBackgroundPaint(Color.white);
-		// chart.getLegend().setAnchor(Legend.SOUTH);
+		
+		final CategoryPlot plot = (CategoryPlot) chart.getPlot();
+		plot.setBackgroundPaint(Color.lightGray);
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setDomainGridlinesVisible(true);
+        plot.setRangeGridlinePaint(Color.white);
 
-		// get a reference to the plot for further customisation...
-		final CategoryPlot plot = chart.getCategoryPlot();
-		plot.setRangeGridlinePaint(Color.orange);
-		plot.setBackgroundPaint(new Color(0xEE, 0xEE, 0xFF));
-		plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+     // set the range axis to display integers only...
+        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-		final CategoryDataset dataset2 = createDataset_tab1_2();
-		plot.setDataset(1, dataset2);
-		plot.mapDatasetToRangeAxis(1, 1);
+        // disable bar outlines...
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setDrawBarOutline(false);
+        
+        // set up gradient paints for series...
+        GradientPaint gp0 = new GradientPaint(
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, new Color(0, 0, 64)
+        );
+        GradientPaint gp1 = new GradientPaint(
+            0.0f, 0.0f, Color.green, 
+            0.0f, 0.0f, new Color(0, 64, 0)
+        );
+        GradientPaint gp2 = new GradientPaint(
+            0.0f, 0.0f, Color.red, 
+            0.0f, 0.0f, new Color(64, 0, 0)
+        );
+        renderer.setSeriesPaint(0, gp0);
+        renderer.setSeriesPaint(1, gp1);
+        renderer.setSeriesPaint(2, gp2);
 
-		final CategoryAxis domainAxis = plot.getDomainAxis();
-		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
-		final ValueAxis axis2 = new NumberAxis("Secondary");
-		plot.setRangeAxis(1, axis2);
-
-		final LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
-		renderer2.setToolTipGenerator(new StandardCategoryToolTipGenerator());
-		plot.setRenderer(1, renderer2);
-		plot.setDatasetRenderingOrder(DatasetRenderingOrder.REVERSE);
-		// OPTIONAL CUSTOMISATION COMPLETED.
-
-		// add the chart to a panel...
-		// final ChartPanel chartPanel = new ChartPanel(chart);
-		// chartPanel.setPreferredSize(new java.awt.Dimension(1000, 700));
-		// setContentPane(chartPanel);
+        CategoryAxis domainAxis = plot.getDomainAxis();
+        domainAxis.setCategoryLabelPositions(
+            CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 6.0)
+        );
 
 		return new ChartPanel(chart) {
 			@Override
@@ -82,94 +97,23 @@ public class PaneTab5 {
 		};
 	}
 
-	private CategoryDataset createDataset_tab1_1() {
+	private CategoryDataset createDataset_tab5() throws UnsupportedEncodingException {
 
 		// row keys...
-		final String series1 = "난방에너지요구량";
-		final String series2 = "냉방에너지요구량";
-		final String series3 = "급탕에너지요구량";
+		final String[] type = { "전기", "가스", "지역난방" };
 
 		// column keys...
-
-		final String category1 = "1월";
-		final String category2 = "2월";
-		final String category3 = "3월";
-		final String category4 = "4월";
-		final String category5 = "5월";
-		final String category6 = "6월";
-		final String category7 = "7월";
-		final String category8 = "8월";
-		final String category9 = "9월";
-		final String category10 = "10월";
-		final String category11 = "11월";
-		final String category12 = "12월";
+		final String[] series = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-		// dataset.addValue(_model.getInfo().getQ_h_b(), series1, category1);
-		dataset.addValue(4.0, series1, category2);
-		dataset.addValue(3.0, series1, category3);
-		dataset.addValue(5.0, series1, category4);
-		dataset.addValue(5.0, series1, category5);
-		dataset.addValue(7.0, series1, category6);
-		dataset.addValue(7.0, series1, category7);
-		dataset.addValue(8.0, series1, category8);
-		dataset.addValue(8.0, series1, category9);
-		dataset.addValue(8.0, series1, category10);
-		dataset.addValue(8.0, series1, category11);
-		dataset.addValue(8.0, series1, category12);
-		// 난방 에너지 요구량
-		dataset.addValue(5.0, series2, category1);
-		dataset.addValue(7.0, series2, category2);
-		dataset.addValue(6.0, series2, category3);
-		dataset.addValue(8.0, series2, category4);
-		dataset.addValue(4.0, series2, category5);
-		dataset.addValue(4.0, series2, category6);
-		dataset.addValue(2.0, series2, category7);
-		dataset.addValue(1.0, series2, category8);
-
-		dataset.addValue(4.0, series3, category1);
-		dataset.addValue(3.0, series3, category2);
-		dataset.addValue(2.0, series3, category3);
-		dataset.addValue(3.0, series3, category4);
-		dataset.addValue(6.0, series3, category5);
-		dataset.addValue(3.0, series3, category6);
-		dataset.addValue(4.0, series3, category7);
-		dataset.addValue(3.0, series3, category8);
+		for (int i = 0; i < 12; i++) {
+			dataset.addValue(_model.getInfo().getQ_w_f_elec()[i], type[0], series[i]);
+			dataset.addValue(_model.getInfo().getQ_w_f_gas()[i], type[1], series[i]);
+			dataset.addValue(_model.getInfo().getQ_w_f_local()[i], type[2], series[i]);
+		}
 
 		return dataset;
-
-	}
-
-	private CategoryDataset createDataset_tab1_2() {
-
-		// row keys...
-		final String series1 = "Fourth";
-
-		// column keys...
-		final String category1 = "Category 1";
-		final String category2 = "Category 2";
-		final String category3 = "Category 3";
-		final String category4 = "Category 4";
-		final String category5 = "Category 5";
-		final String category6 = "Category 6";
-		final String category7 = "Category 7";
-		final String category8 = "Category 8";
-
-		// create the dataset...
-		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-		dataset.addValue(15.0, series1, category1);
-		dataset.addValue(24.0, series1, category2);
-		dataset.addValue(31.0, series1, category3);
-		dataset.addValue(25.0, series1, category4);
-		dataset.addValue(56.0, series1, category5);
-		dataset.addValue(37.0, series1, category6);
-		dataset.addValue(77.0, series1, category7);
-		dataset.addValue(18.0, series1, category8);
-
-		return dataset;
-
 	}
 }
