@@ -109,9 +109,9 @@ public class PaneTab5 {
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
 		for (int i = 0; i < 12; i++) {
-			dataset.addValue(_model.getInfo().getQ_w_f_elec()[i], type[0], series[i]);
-			dataset.addValue(_model.getInfo().getQ_w_f_gas()[i], type[1], series[i]);
-			dataset.addValue(_model.getInfo().getQ_w_f_local()[i], type[2], series[i]);
+			dataset.addValue(_model.getInfo().getQ_w_f_elec()[i+1], type[0], series[i]);
+			dataset.addValue(_model.getInfo().getQ_w_f_gas()[i+1], type[1], series[i]);
+			dataset.addValue(_model.getInfo().getQ_w_f_local()[i+1], type[2], series[i]);
 		}
 
 		return dataset;
