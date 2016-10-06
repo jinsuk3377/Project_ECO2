@@ -57,8 +57,8 @@ public class BarChartFrame extends JFrame {
     	
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	JTabbedPane tabbedPane = new JTabbedPane();
-    	tabbedPane.add("test1", createPane_tab1());
-    	tabbedPane.add("test2", createPane_tab2());
+    	tabbedPane.add("result1", createPane_tab1());
+    	tabbedPane.add("result2", createPane_tab2());
     	add(tabbedPane, BorderLayout.CENTER);
     }
 
@@ -68,9 +68,9 @@ public class BarChartFrame extends JFrame {
 
         // create the chart...
         final JFreeChart chart = ChartFactory.createBarChart(
-            "Dual Axis Chart",        // chart title
-            "Category",               // domain axis label
-            "Value",                  // range axis label
+            "에너지 요구량",        // chart title
+            "월 별",               // domain axis label
+            "에너지 요구량",                  // range axis label
             dataset1,                 // data
             PlotOrientation.VERTICAL,
             true,                     // include legend
@@ -132,24 +132,29 @@ public class BarChartFrame extends JFrame {
     private CategoryDataset createDataset_tab1_1() {
 
         // row keys...
-        final String series1 = "First";
-        final String series2 = "Second";
-        final String series3 = "Third";
+        final String series1 = "난방에너지요구량";
+        final String series2 = "냉방에너지요구량";
+        final String series3 = "급탕에너지요구량";
 
         // column keys...
-        final String category1 = "Category 1";
-        final String category2 = "Category 2";
-        final String category3 = "Category 3";
-        final String category4 = "Category 4";
-        final String category5 = "Category 5";
-        final String category6 = "Category 6";
-        final String category7 = "Category 7";
-        final String category8 = "Category 8";
-
+        
+        final String category1 = "1월";
+        final String category2 = "2월";
+        final String category3 = "3월";
+        final String category4 = "4월";
+        final String category5 = "5월";
+        final String category6 = "6월";
+        final String category7 = "7월";
+        final String category8 = "8월";
+        final String category9 = "9월";
+        final String category10 = "10월";
+        final String category11 = "11월";
+        final String category12 = "12월";
+         
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(1.0, series1, category1);
+        
+        //dataset.addValue(_model.getInfo().getQ_h_b(), series1, category1);
         dataset.addValue(4.0, series1, category2);
         dataset.addValue(3.0, series1, category3);
         dataset.addValue(5.0, series1, category4);
@@ -157,7 +162,11 @@ public class BarChartFrame extends JFrame {
         dataset.addValue(7.0, series1, category6);
         dataset.addValue(7.0, series1, category7);
         dataset.addValue(8.0, series1, category8);
-
+        dataset.addValue(8.0, series1, category9);
+        dataset.addValue(8.0, series1, category10);
+        dataset.addValue(8.0, series1, category11);
+        dataset.addValue(8.0, series1, category12);
+        // 난방 에너지 요구량
         dataset.addValue(5.0, series2, category1);
         dataset.addValue(7.0, series2, category2);
         dataset.addValue(6.0, series2, category3);
