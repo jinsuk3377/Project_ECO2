@@ -27,6 +27,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	private LoadGbXml_Panel loadGbXmlPanel;
+	private LoadHVAC_Panel loadHVACPanel;
 	//private InfoGbXml_Panel infoGbXmlPanel;
 	//private BarChartDemo barchartDemo;
 	//private BarChartDemo2 barchartDemo2;
@@ -46,12 +47,13 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		//barchartDemo3 = new BarChartDemo3(getName());
 		csvWriter = new CsvWriter(_model);
 		createLoadGbXmlPanel();
+		createLoadHVACPanel();
 		createSimulationButton();
 		//createInfoGbXmlPanel();
 		
 		setLayout(null);
 		//setSize(800, 950);
-		setSize(800, 300);
+		setSize(800, 340);
 		
 		refreshView();
 	}
@@ -63,6 +65,15 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		loadGbXmlPanel.setModel(_model);
 		loadGbXmlPanel.setLocation(10, 35);
 		add(loadGbXmlPanel);
+	}
+	
+	private void createLoadHVACPanel() {
+		loadHVACPanel = new LoadHVAC_Panel(_model);
+		loadHVACPanel.setSize(660, 95);
+		loadHVACPanel.setToolTipText("");
+		loadHVACPanel.setModel(_model);
+		loadHVACPanel.setLocation(10, 135);
+		add(loadHVACPanel);
 	}
 	/*
 	private void createInfoGbXmlPanel() {
@@ -79,7 +90,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		simulationButton.setForeground(SystemColor.desktop);
 		simulationButton.setFont(new Font("Consolas", 0, 13));
 		//simulationButton.setBounds(535, 820, 132, 28);
-		simulationButton.setBounds(535, 170, 132, 28);
+		simulationButton.setBounds(535, 250, 132, 28);
 		simulationButton.addActionListener(this);
 		add(simulationButton);
 	}

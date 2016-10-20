@@ -154,10 +154,11 @@ public class ReadGbXml {
 							}
 
 							String name = w.getElementsByTagName("Name").item(0).getTextContent();
+							String testname = name;
 							name = name.substring(0, 1);
 
 							NodeList windowNodeList = w.getElementsByTagName("RectangularGeometry");
-							double area = 0;
+							double area1 = 0;
 							Node width = null, height = null;
 
 							for (int l = 0; l < windowNodeList.getLength(); l++) {
@@ -166,21 +167,21 @@ public class ReadGbXml {
 								height = a.getElementsByTagName("Height").item(0);
 							}
 
-							area = Double.parseDouble(width.getTextContent())
+							area1 = Double.parseDouble(width.getTextContent())
 									* Double.parseDouble(height.getTextContent());
-							if (area == 0) {
+							if (area1 == 0) {
 								System.out.println("Error Opening RectangularGeometry width * height = 0");
 								return;
 							}
-
+							System.out.println("window " + testname + " " + String.valueOf(area1)); //add test code
 							if (name.equals("S")) {
-								each_window_area[0] += area;
+								each_window_area[0] += area1;
 							} else if (name.equals("W")) {
-								each_window_area[1] += area;
+								each_window_area[1] += area1;
 							} else if (name.equals("N")) {
-								each_window_area[2] += area;
+								each_window_area[2] += area1;
 							} else if (name.equals("E")) {
-								each_window_area[3] += area;
+								each_window_area[3] += area1;
 							} else {
 								System.out.println("Error Opening Name");
 							}
@@ -195,32 +196,34 @@ public class ReadGbXml {
 						// 위해 문자 X를 가져옴)
 
 						String name = temp.getElementsByTagName("Name").item(0).getTextContent();
+						String testname = name;
 						name = name.substring(0, 1);
 
 						NodeList shellNodeList = temp.getElementsByTagName("RectangularGeometry");
-						double area = 0;
+						double area2 = 0;
 						Node width = null, height = null;
 
 						for (int l = 0; l < shellNodeList.getLength(); l++) {
+							if(width!=null && height!=null) break;
 							Element a = (Element) shellNodeList.item(l);
 							width = a.getElementsByTagName("Width").item(0);
 							height = a.getElementsByTagName("Height").item(0);
 						}
 
-						area = Double.parseDouble(width.getTextContent()) * Double.parseDouble(height.getTextContent());
-						if (area == 0) {
+						area2 = Double.parseDouble(width.getTextContent()) * Double.parseDouble(height.getTextContent());
+						if (area2 == 0) {
 							System.out.println("Error ExteriorWall RectangularGeometry width * height = 0");
 							return;
 						}
-
+						System.out.println("ExteriorWall " + testname + " " + String.valueOf(area2)); //add test code
 						if (name.equals("S")) {
-							each_shell_area[0] += area;
+							each_shell_area[0] += area2;
 						} else if (name.equals("W")) {
-							each_shell_area[1] += area;
+							each_shell_area[1] += area2;
 						} else if (name.equals("N")) {
-							each_shell_area[2] += area;
+							each_shell_area[2] += area2;
 						} else if (name.equals("E")) {
-							each_shell_area[3] += area;
+							each_shell_area[3] += area2;
 						} else {
 							System.out.println("Error ExteriorWall Name");
 						}
@@ -282,7 +285,7 @@ public class ReadGbXml {
 				}
 			}
 		}
-		floor = (int) ( total_area / roof_area );
+		floor = (int) (Math.round( total_area / roof_area ));
 		
 		for (int i = 0; i < 4; i++) {
 			each_wall_area[i] = each_shell_area[i] - each_window_area[i];
