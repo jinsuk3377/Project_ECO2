@@ -62,6 +62,8 @@ public class ReadGbXml {
 		ArrayList<String> wArrayList = new ArrayList<String>(); // Window id
 		ArrayList<Double> wuArrayList = new ArrayList<Double>(); // Window U-Value
 		ArrayList<Double> wshgcArrayList = new ArrayList<Double>(); // window SHGC unit="Fraction"
+		
+		ArrayList<String> idArrayList = new ArrayList<String>(); //buildingStoreyIdRef //floor
 
 		double[] each_shell_area = { 0, 0, 0, 0 }; // 외피면적, index 순서 S,W,N,E
 		double[] each_wall_area = { 0, 0, 0, 0 }; // 벽체면적, index 순서 S,W,N,E
@@ -102,14 +104,26 @@ public class ReadGbXml {
 					NodeList uvalue = temp.getElementsByTagName("U-value");
 					Node u = uvalue.item(0);
 					NodeList shgc = temp.getElementsByTagName("SolarHeatGainCoeff");
-					Node s = shgc.item(0); // solarIncidentAngle = "0"
+					Element s = null;
+					Double d = Double.MAX_VALUE;
+					for(int k=0; k<shgc.getLength(); k++) {
+						s = (Element) shgc.item(k);
+						if(s.getAttribute("solarIncidentAngle") == null || s.getAttribute("solarIncidentAngle") == "90") {
+							d = Double.parseDouble(s.getTextContent());
+							break;
+						}
+						else {
+							if(d > Double.parseDouble(s.getTextContent()))
+								d = Double.parseDouble(s.getTextContent());
+						}
+					}
 
-					if (u.hasChildNodes() && s.hasChildNodes()) {
-						Double d = Double.parseDouble(u.getTextContent());
+					if (u.hasChildNodes()&&d!=Double.MAX_VALUE) {
+						Double dd = Double.parseDouble(u.getTextContent());
 						Double ds = Double.parseDouble(s.getTextContent());
-						if (d != 0 && ds != 0) {
+						if (dd != 0 && ds != 0) {
 							wArrayList.add(id);
-							wuArrayList.add(d);
+							wuArrayList.add(dd);
 							wshgcArrayList.add(ds);
 						}
 					} else {
@@ -255,6 +269,87 @@ public class ReadGbXml {
 						} else {
 							System.out.println("Error InteriorFloor constructionIdRef");
 						}
+					} else if (type.equals("SlabOnGrade")) {
+						String cid = temp.getAttribute("constructionIdRef");
+						if (cid != null) {
+							int index = iArrayList.indexOf(cid);
+							_model.getInfo().setU_floor(iuArrayList.get(index));
+							
+							NodeList shellNodeList = temp.getElementsByTagName("RectangularGeometry");
+							double area = 0;
+							Node width = null, height = null;
+
+							for (int l = 0; l < shellNodeList.getLength(); l++) {
+								Element a = (Element) shellNodeList.item(l);
+								width = a.getElementsByTagName("Width").item(0);
+								height = a.getElementsByTagName("Height").item(0);
+							}
+
+							area = Double.parseDouble(width.getTextContent()) * Double.parseDouble(height.getTextContent());
+							if (area == 0) {
+								System.out.println("Error SlabOnGrade RectangularGeometry width * height = 0");
+								return;
+							}
+							total_area += area;
+							//floor++;
+
+						} else {
+							System.out.println("Error SlabOnGrade constructionIdRef");
+						}
+					} else if (type.equals("Raisedfloor")) {
+						String cid = temp.getAttribute("constructionIdRef");
+						if (cid != null) {
+							int index = iArrayList.indexOf(cid);
+							_model.getInfo().setU_floor(iuArrayList.get(index));
+							
+							NodeList shellNodeList = temp.getElementsByTagName("RectangularGeometry");
+							double area = 0;
+							Node width = null, height = null;
+
+							for (int l = 0; l < shellNodeList.getLength(); l++) {
+								Element a = (Element) shellNodeList.item(l);
+								width = a.getElementsByTagName("Width").item(0);
+								height = a.getElementsByTagName("Height").item(0);
+							}
+
+							area = Double.parseDouble(width.getTextContent()) * Double.parseDouble(height.getTextContent());
+							if (area == 0) {
+								System.out.println("Error Raisedfloor RectangularGeometry width * height = 0");
+								return;
+							}
+							total_area += area;
+							//floor++;
+
+						} else {
+							System.out.println("Error Raisedfloor constructionIdRef");
+						}
+					} else if (type.equals("UndergroundSlab")) {
+						String cid = temp.getAttribute("constructionIdRef");
+						if (cid != null) {
+							int index = iArrayList.indexOf(cid);
+							_model.getInfo().setU_floor(iuArrayList.get(index));
+							
+							NodeList shellNodeList = temp.getElementsByTagName("RectangularGeometry");
+							double area = 0;
+							Node width = null, height = null;
+
+							for (int l = 0; l < shellNodeList.getLength(); l++) {
+								Element a = (Element) shellNodeList.item(l);
+								width = a.getElementsByTagName("Width").item(0);
+								height = a.getElementsByTagName("Height").item(0);
+							}
+
+							area = Double.parseDouble(width.getTextContent()) * Double.parseDouble(height.getTextContent());
+							if (area == 0) {
+								System.out.println("Error UndergroundSlab RectangularGeometry width * height = 0");
+								return;
+							}
+							total_area += area;
+							//floor++;
+
+						} else {
+							System.out.println("Error UndergroundSlab constructionIdRef");
+						}
 					} else if (type.equals("Roof")) {
 						String cid = temp.getAttribute("constructionIdRef");
 						if (cid != null) {
@@ -284,8 +379,22 @@ public class ReadGbXml {
 					}
 				}
 			}
+			
+			if (element.hasChildNodes()) {
+				nodeList = element.getElementsByTagName("Space");
+				
+				for (int j = 0; j < nodeList.getLength(); j++) {
+					Element temp = (Element) nodeList.item(j);					
+					String id = temp.getAttribute("buildingStoreyIdRef");
+					
+					if(!idArrayList.contains(id)) {
+						idArrayList.add(id);
+						System.out.println(id);
+					}
+				}
+			}
 		}
-		floor = (int) (Math.round( total_area / roof_area ));
+		floor = idArrayList.size();
 		
 		for (int i = 0; i < 4; i++) {
 			each_wall_area[i] = each_shell_area[i] - each_window_area[i];
