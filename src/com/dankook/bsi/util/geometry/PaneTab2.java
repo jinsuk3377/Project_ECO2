@@ -86,17 +86,17 @@ public class PaneTab2 {
 		final String[] type = { "난방1차에너지소요량", "냉방1차에너지소요량", "급탕1차에너지소요량", "조명1차에너지소요량", "환기1차에너지소요량" };
 
 		// column keys...
-		final String[] series = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+		final String[] series = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-		for (int i = 0; i < 12; i++) {
-			dataset.addValue(_model.getInfo().getQ_h_1()[i], type[0], series[i]);
-			dataset.addValue(_model.getInfo().getQ_c_1()[i], type[1], series[i]);
-			dataset.addValue(_model.getInfo().getQ_w_1()[i], type[2], series[i]);
-			dataset.addValue(_model.getInfo().getQ_l_1()[i], type[3], series[i]);
-			dataset.addValue(_model.getInfo().getQ_v_1()[i], type[4], series[i]);
+		for (int i = 1; i < 13; i++) {
+			dataset.addValue(_model.getInfo().getQ_h_1()[i], type[0], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_c_1()[i], type[1], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_w_1()[i], type[2], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_l_1()[i], type[3], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_v_1()[i], type[4], series[i-1]);
 		}
 
 		return dataset;

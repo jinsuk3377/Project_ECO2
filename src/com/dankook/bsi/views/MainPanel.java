@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -114,27 +115,38 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		
 		if (e.getSource() == this.simulationButton) {
 			
-			_model.setInfoValues(); // Simulation
-			try {
-				csvWriter.csvWriter();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if (!_model.getConvertBIXCheck()) JOptionPane.showMessageDialog(null, 
+					"Press ... button in BIM Model Upload dialog and import your building information model file that gbXML format.", 
+					"Message: Simulation", JOptionPane.INFORMATION_MESSAGE);
+			
+			else {
+				
+				_model.setInfoValues(); // Simulation
+				
+				try {
+					csvWriter.csvWriter();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							barchartFrame = new BarChartFrame(_model);
+							barchartFrame.setTitle("test");
+							barchartFrame.setDefaultCloseOperation(3);
+							barchartFrame.setSize(1000, 700);
+							barchartFrame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
 			}
 			
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						barchartFrame = new BarChartFrame(_model);
-						barchartFrame.setTitle("test");
-						barchartFrame.setDefaultCloseOperation(3);
-						barchartFrame.setSize(1000, 700);
-						barchartFrame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+			
 			//barchartDemo.start();
 			//barchartDemo2.start();
 			//barchartDemo3.start();

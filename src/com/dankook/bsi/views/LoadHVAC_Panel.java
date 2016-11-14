@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -15,31 +14,22 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
-import org.xml.sax.SAXException;
-
-import com.dankook.bsi.exception.GBXmlValidationError;
-import com.dankook.bsi.model.Info;
+import com.dankook.bsi.exception.HVACValidationError;
 import com.dankook.bsi.model.Ui_Model;
-import com.dankook.bsi.views.dataprocessing.GbXmltoBIX;
-import com.dankook.bsi.views.dataprocessing.ReadGbXml;
 
 public class LoadHVAC_Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private GbXmltoBIX gbxmltobix;
 	private JTextField outputTextField;
 	private JButton _loadFileBtn;
 	private Ui_Model _model;
-	private ReadGbXml readGbXml;
-	private String gbxmlFilePath = "";
+	private String HVACFilePath = "";
 
 	public LoadHVAC_Panel(Ui_Model model) {
 		_model = model;
 		
-		setToolTipText("gbXml 파일을 가져와서 아래 단계에 그 값을 뿌려줍니다.");
+		setToolTipText("HVAC 엑셀 파일을 업로드하여 설비 관련 데이터를 읽습니다.");
 		setLayout(null);
 		setBounds(10, 10, 770, 58);
 
@@ -61,8 +51,17 @@ public class LoadHVAC_Panel extends JPanel {
 		this._loadFileBtn = new JButton("...");
 		this._loadFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoadHVAC_Panel.this.loadFile();
-				LoadHVAC_Panel.this.convertFile();
+				try {
+					if (!_model.getConvertBIXCheck()) JOptionPane.showMessageDialog(null, 
+							"Press ... button in BIM Model Upload dialog and import your building information model file that gbXML format.", 
+							"Message: HVAC Model Upload", JOptionPane.INFORMATION_MESSAGE);
+					
+					else 
+						LoadHVAC_Panel.this.loadFile();
+				} catch (HVACValidationError e1) {
+					JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
+							"ValidationError", 0);
+				}
 			}
 		});
 		this._loadFileBtn.setBounds(600, 53, 45, 25);
@@ -74,21 +73,19 @@ public class LoadHVAC_Panel extends JPanel {
 		this._model = model;
 	}
 
-	protected void loadFile() {
+	protected void loadFile() throws HVACValidationError {
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileFilter(new FileNameExtensionFilter(this._model.getGbxmlFileDesc(),
-				new String[] { this._model.getGbxmlFileExtention() }));
+		fileChooser.setFileFilter(new FileNameExtensionFilter(this._model.getHVACFileDesc(),
+				new String[] { this._model.getHVACFileExtention() }));
 		fileChooser.setMultiSelectionEnabled(false);
 		if (fileChooser.showOpenDialog(this) == 0) {
-			String gbxmlFilePath = fileChooser.getSelectedFile().toString();
+			String HVACFilePath = fileChooser.getSelectedFile().toString();
 			try {
-				this._model.openGbxmlFile(gbxmlFilePath);
-				_model.setGbxmlFilePath(gbxmlFilePath);
-				_model.setInfo();
-				outputTextField.setText(gbxmlFilePath);
-			} catch (GBXmlValidationError e) {
-				JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
-						"ValidationError", 0);
+				if (HVACFilePath.isEmpty()) return;
+				boolean check = false;
+				_model.setHVACInfo();
+				check = _model.openHVACFile(HVACFilePath);
+				if(check) outputTextField.setText(HVACFilePath);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "An Error has occured during load file!!", "FileLoadError", 0);
 
@@ -97,24 +94,11 @@ public class LoadHVAC_Panel extends JPanel {
 		}
 	}
 	
-	public void convertFile() {
-		try {
-			gbxmltobix = new GbXmltoBIX(_model);
-			gbxmltobix.start();
-			readGbXml = new ReadGbXml(_model);
-			readGbXml.StartReadGbXml();
-			
-		} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public String getGbxmlFilePath() {
-		return gbxmlFilePath;
+	public String getHVACFilePath() {
+		return HVACFilePath;
 	}
 
 	public void update(Object eventDispatcher) {
-		this.outputTextField.setText(this._model.getGbxmlFilePath());
+		this.outputTextField.setText(this._model.getHVACFilePath());
 	}
 }

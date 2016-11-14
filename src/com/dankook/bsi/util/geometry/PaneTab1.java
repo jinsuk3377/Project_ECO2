@@ -84,12 +84,12 @@ public class PaneTab1 {
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-		for (int i = 0; i < 12; i++) {
-			dataset.addValue(_model.getInfo().getQ_h_b()[i], type[0], series[i]);
-			dataset.addValue(_model.getInfo().getQ_c_b()[i], type[1], series[i]);
-			dataset.addValue(_model.getInfo().getQ_w_b()[i], type[2], series[i]);
-			dataset.addValue(_model.getInfo().getQ_l_b()[i], type[3], series[i]);
-			dataset.addValue(_model.getInfo().getQ_v_b()[i], type[4], series[i]);
+		for (int i = 1; i < 13; i++) {
+			dataset.addValue(_model.getInfo().getQ_h_b()[i], type[0], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_c_b()[i], type[1], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_w_b()[i], type[2], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_l_b()[i], type[3], series[i-1]);
+			dataset.addValue(_model.getInfo().getQ_v_b()[i], type[4], series[i-1]);
 		}
 
 		return dataset;

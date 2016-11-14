@@ -1,12 +1,9 @@
 package com.dankook.bsi.model;
 
-enum HeatingSystemType {보일러, 지역난방, EHP};
-enum HeatingPumpSystemType {보일러, 지역난방, EHP};
-enum CoolingSystemType {압축식, 흡수식, EHP};
-
 public class Info {
 	
 	private String gbxmlFilePath = "";
+	private String HVACFilePath = "";
 	
 	private double area; //GFA, USER
 	private int floor; //USER
@@ -298,7 +295,7 @@ public class Info {
 			Q_c_1[i] = Q_c_f_elec[i] * 2.75 + Q_c_f_gas[i] * 1.1 + Q_c_f_local[i] * 0.728;
 		}
 		
-		this.print();
+		this.printBIX();
 	}
 	
 	public void testSetValues() {
@@ -318,7 +315,7 @@ public class Info {
 	}
 	
 	
-	public void print() {
+	public void printBIX() {
 		
 		System.out.printf("Area : %-15f\n", getArea());
 		System.out.printf("Roof_Area : %-15f\n", getRoof_area());
@@ -401,6 +398,24 @@ public class Info {
 		System.out.printf("\n환기1차에너지소요량 :   ");
 		for(int i=1; i<=12; i++) 
 			System.out.printf("%f  ", Q_v_1[i]);
+	}
+	
+	public void printHVAC() {
+		
+		System.out.println("난방기기");
+		System.out.println("\t기기방식 : " + HeatingSystemType.name());
+		System.out.println("\t용량 : " + HeatingVolumn);
+		System.out.println("\t효율 : " + HeatingEfficiency);
+		System.out.println("급탕기기");
+		System.out.println("\t기기방식 : " + HeatingPumpSystemType.name());
+		System.out.println("\t용량 : " + HeatingPumpVolumn);
+		System.out.println("\t효율 : " + HeatingPumpEfficiency);
+		System.out.println("냉방기기");
+		System.out.println("\t기기방식 : " + CoolingSystemType.name());
+		System.out.println("\t용량 : " + CoolingVolumn);
+		System.out.println("\t효율 : " + CoolingEfficiency);
+		System.out.println("조명기기");
+		System.out.println("\t조명밀도 : " + LightingDensity);
 	}
 	
 	public static String[] parseString(String[] str, double[] array) {
@@ -573,6 +588,14 @@ public class Info {
 
 	public void setGbxmlFilePath(String gbxmlFilePath) {
 		this.gbxmlFilePath = gbxmlFilePath;
+	}
+	
+	public String getHVACFilePath() {
+		return HVACFilePath;
+	}
+	
+	public void setHVACFilePath(String HVACFilePath) {
+		this.HVACFilePath = HVACFilePath;
 	}
 
 	public double getLight_density() {

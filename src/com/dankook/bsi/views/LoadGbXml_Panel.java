@@ -21,7 +21,6 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 import com.dankook.bsi.exception.GBXmlValidationError;
-import com.dankook.bsi.model.Info;
 import com.dankook.bsi.model.Ui_Model;
 import com.dankook.bsi.views.dataprocessing.GbXmltoBIX;
 import com.dankook.bsi.views.dataprocessing.ReadGbXml;
@@ -62,7 +61,6 @@ public class LoadGbXml_Panel extends JPanel {
 		this._loadFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoadGbXml_Panel.this.loadFile();
-				LoadGbXml_Panel.this.convertFile();
 			}
 		});
 		this._loadFileBtn.setBounds(600, 53, 45, 25);
@@ -82,10 +80,15 @@ public class LoadGbXml_Panel extends JPanel {
 		if (fileChooser.showOpenDialog(this) == 0) {
 			String gbxmlFilePath = fileChooser.getSelectedFile().toString();
 			try {
+				
+				if (gbxmlFilePath.isEmpty()) return;
+				_model.setGbXMLInfo();
 				this._model.openGbxmlFile(gbxmlFilePath);
-				_model.setGbxmlFilePath(gbxmlFilePath);
-				_model.setInfo();
 				outputTextField.setText(gbxmlFilePath);
+				
+				LoadGbXml_Panel.this.convertFile();
+				_model.setConvertBIXCheck(true);
+				
 			} catch (GBXmlValidationError e) {
 				JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
 						"ValidationError", 0);

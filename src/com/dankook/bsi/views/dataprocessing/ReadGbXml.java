@@ -1,28 +1,17 @@
 package com.dankook.bsi.views.dataprocessing;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.xpath.XPathAPI;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.apache.xerces.parsers.DOMParser;
-import org.apache.xml.serialize.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.dankook.bsi.model.Info;
 import com.dankook.bsi.model.Ui_Model;
 
 public class ReadGbXml {
