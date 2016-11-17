@@ -22,10 +22,11 @@ import org.xml.sax.SAXException;
 
 import com.dankook.bsi.exception.GBXmlValidationError;
 import com.dankook.bsi.model.Ui_Model;
+import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.dataprocessing.GbXmltoBIX;
 import com.dankook.bsi.views.dataprocessing.ReadGbXml;
 
-public class LoadGbXml_Panel extends JPanel {
+public class LoadGbXml_Panel extends JPanel implements Ui_Observer {
 	private static final long serialVersionUID = 1L;
 	
 	private GbXmltoBIX gbxmltobix;
@@ -60,12 +61,22 @@ public class LoadGbXml_Panel extends JPanel {
 		this._loadFileBtn = new JButton("...");
 		this._loadFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+					// convertBIXcheck가 true일 때
 				LoadGbXml_Panel.this.loadFile();
+				
+					if (_model.getIsConvertBIX()) {
+						//_model.getHvacPanel().get_loadFileBtn().setEnabled(true);
+						
+					}
+					/*
+					else
+						_model.getHvacPanel().get_loadFileBtn().setEnabled(false);
+						*/
+					//convertBIXcheck이 static으로 돼있기 때문에 이러한 성질을 이용하면 될 것 같다.
 			}
 		});
 		this._loadFileBtn.setBounds(600, 53, 45, 25);
 		add(this._loadFileBtn);
-		
 	}
 
 	public void setModel(Ui_Model model) {
@@ -79,15 +90,14 @@ public class LoadGbXml_Panel extends JPanel {
 		fileChooser.setMultiSelectionEnabled(false);
 		if (fileChooser.showOpenDialog(this) == 0) {
 			String gbxmlFilePath = fileChooser.getSelectedFile().toString();
-			try {
-				
+			try {			
 				if (gbxmlFilePath.isEmpty()) return;
 				_model.setGbXMLInfo();
 				this._model.openGbxmlFile(gbxmlFilePath);
-				outputTextField.setText(gbxmlFilePath);
 				
 				LoadGbXml_Panel.this.convertFile();
-				_model.setConvertBIXCheck(true);
+				_model.setIsConvertBIX(true);
+				update();
 				
 			} catch (GBXmlValidationError e) {
 				JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
@@ -117,7 +127,9 @@ public class LoadGbXml_Panel extends JPanel {
 		return gbxmlFilePath;
 	}
 
-	public void update(Object eventDispatcher) {
+	public void update() {
 		this.outputTextField.setText(this._model.getGbxmlFilePath());
+		_model.getHvacPanel().update();
+		_model.getMainPanel().update();
 	}
 }

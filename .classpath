@@ -5,5 +5,35 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/External Library"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/jfreechart-1.0.19-experimental.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/jfreechart-1.0.19-swt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/jfreesvg-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/orsoncharts-1.4-eval-nofx.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/orsonpdf-1.6-eval.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/servlet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/opencsv-3.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/xml-resolver-1.2.jar/xml-resolver-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/apache-commons-lang.jar/apache-commons-lang.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/org.apache.xml.serializer-2.7.1.jar/org.apache.xml.serializer-2.7.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/xalan-2.4.0.jar/xalan-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Downloads/xercesImpl-2.2.1.jar/xercesImpl-2.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/poi-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/poi-examples-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/poi-excelant-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/poi-ooxml-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/poi-ooxml-schemas-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/poi-scratchpad-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/lib/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/ooxml-lib/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="C:/Users/BSI_Lab/Desktop/poi-bin-3.15-20160924/poi-3.15/ooxml-lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -17,14 +17,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.dankook.bsi.exception.HVACValidationError;
 import com.dankook.bsi.model.Ui_Model;
+import com.dankook.bsi.util.Ui_Observer;
 
-public class LoadHVAC_Panel extends JPanel {
+public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 	private static final long serialVersionUID = 1L;
 	
 	private JTextField outputTextField;
 	private JButton _loadFileBtn;
 	private Ui_Model _model;
-	private String HVACFilePath = "";
+	private String HVACFilePath = null;
 
 	public LoadHVAC_Panel(Ui_Model model) {
 		_model = model;
@@ -49,15 +50,18 @@ public class LoadHVAC_Panel extends JPanel {
 		add(this.outputTextField);
 
 		this._loadFileBtn = new JButton("...");
+		this._loadFileBtn.setEnabled(false);
 		this._loadFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				try {
-					if (!_model.getConvertBIXCheck()) JOptionPane.showMessageDialog(null, 
+					if (!_model.getIsConvertBIX()) JOptionPane.showMessageDialog(null, 
 							"Press ... button in BIM Model Upload dialog and import your building information model file that gbXML format.", 
 							"Message: HVAC Model Upload", JOptionPane.INFORMATION_MESSAGE);
 					
 					else 
 						LoadHVAC_Panel.this.loadFile();
+					
 				} catch (HVACValidationError e1) {
 					JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
 							"ValidationError", 0);
@@ -80,12 +84,14 @@ public class LoadHVAC_Panel extends JPanel {
 		fileChooser.setMultiSelectionEnabled(false);
 		if (fileChooser.showOpenDialog(this) == 0) {
 			String HVACFilePath = fileChooser.getSelectedFile().toString();
+			_model.setHVACFilePath(HVACFilePath);
+			
 			try {
 				if (HVACFilePath.isEmpty()) return;
-				boolean check = false;
 				_model.setHVACInfo();
-				check = _model.openHVACFile(HVACFilePath);
-				if(check) outputTextField.setText(HVACFilePath);
+				boolean check = _model.openHVACFile(HVACFilePath);
+				if(check) update();
+				
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "An Error has occured during load file!!", "FileLoadError", 0);
 
@@ -98,7 +104,33 @@ public class LoadHVAC_Panel extends JPanel {
 		return HVACFilePath;
 	}
 
-	public void update(Object eventDispatcher) {
+	public void setMachine_way(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setTotal(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setEfficiency(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setDensity(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void set_loadFileBtn(boolean enable) {
+		_loadFileBtn.setEnabled(enable);
+	}
+	
+	public void update() {
 		this.outputTextField.setText(this._model.getHVACFilePath());
+		if (_model.getIsConvertBIX())
+			set_loadFileBtn(true);
 	}
 }

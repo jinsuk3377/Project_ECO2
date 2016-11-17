@@ -4,19 +4,25 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.dankook.bsi.exception.*;
-import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.util.greenbuilding.GBXmlContext;
+import com.dankook.bsi.views.*;
 import com.dankook.bsi.views.dataprocessing.GBXmlReader;
 import com.dankook.bsi.views.dataprocessing.ReadHVAC;
 
-public class Ui_Model implements Ui_Observer {
+public class Ui_Model {
 	private GBXmlContext gbxml;
 	private Info info = null;
+
+	private MainPanel mainPanel;
+	private LoadGbXml_Panel gbxmlPanel;
+	private LoadHVAC_Panel hvacPanel;
+	private ReadHVAC readHVAC;
+	
 	private static String gbxmlFilePath = "";
 	private static String BIXFilePath = "";
 	private static String HVACFilePath = "";
-	private static boolean convertBIXCheck = false;
-
+	private static boolean isConvertBIX = false;
+	
 	public Ui_Model() {
 		this.gbxml = null;
 		this.info = null;
@@ -24,6 +30,30 @@ public class Ui_Model implements Ui_Observer {
 	
 	public String getGbxmlFileExtention() {
 		return "xml";
+	}
+	
+	public MainPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public void setMainPanel(MainPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
+
+	public LoadGbXml_Panel getGbxmlPanel() {
+		return gbxmlPanel;
+	}
+
+	public void setGbxmlPanel(LoadGbXml_Panel gbxmlPanel) {
+		this.gbxmlPanel = gbxmlPanel;
+	}
+
+	public LoadHVAC_Panel getHvacPanel() {
+		return hvacPanel;
+	}
+
+	public void setHvacPanel(LoadHVAC_Panel hvacPanel) {
+		this.hvacPanel = hvacPanel;
 	}
 
 	public String getGbxmlFileDesc() {
@@ -57,9 +87,8 @@ public class Ui_Model implements Ui_Observer {
 		boolean check = false;
 		
 		try {
-			setHVACFilePath(filePath);
 			info.setHVACFilePath(filePath);
-			ReadHVAC readHVAC = new ReadHVAC(this);
+			readHVAC = new ReadHVAC(this);
 			check = readHVAC.ExcelRead();
 			info.printHVAC();
 		} catch (Exception e) {
@@ -125,12 +154,12 @@ public class Ui_Model implements Ui_Observer {
 		return Ui_Model.HVACFilePath;
 	}
 	
-	public void setConvertBIXCheck(boolean convertBIXCheck) {
-		Ui_Model.convertBIXCheck = convertBIXCheck;
+	public void setIsConvertBIX(boolean convertBIXCheck) {
+		Ui_Model.isConvertBIX = convertBIXCheck;
 	}
 	
-	public boolean getConvertBIXCheck() {
-		return Ui_Model.convertBIXCheck;
+	public boolean getIsConvertBIX() {
+		return Ui_Model.isConvertBIX;
 	}
 
 	public void update(Object paramObject) {

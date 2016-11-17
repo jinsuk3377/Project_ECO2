@@ -21,8 +21,9 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 	private Ui_Model _model;
 	private MainPanel mainPanel;
 	private JTabbedPane Tab;// add
-
-	public static void main(String[] args){
+	
+	public static void main(String[] args) throws IOException {
+		
 			EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -37,13 +38,14 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 				}
 			}
 		});
-		
+			
 	}
 	
 	public Ui_Main() throws IOException {
 		
 		_model = new Ui_Model();
 		mainPanel = new MainPanel(_model);
+		_model.setMainPanel(mainPanel);
 
 		add(mainPanel);
 		setMenuBar();
@@ -65,7 +67,7 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 	}
 
 	@Override
-	public void update(Object paramObject) {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

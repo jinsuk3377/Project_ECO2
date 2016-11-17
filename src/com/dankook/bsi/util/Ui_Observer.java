@@ -2,7 +2,7 @@ package com.dankook.bsi.util;
 
 public abstract interface Ui_Observer
 {
-  public abstract void update(Object paramObject);
+  public abstract void update();
 }
 
 /* Location:           C:\Users\LG\workspace\Django-server\EDI.jar
