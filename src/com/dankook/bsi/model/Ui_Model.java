@@ -7,6 +7,7 @@ import com.dankook.bsi.exception.*;
 import com.dankook.bsi.util.greenbuilding.GBXmlContext;
 import com.dankook.bsi.views.*;
 import com.dankook.bsi.views.dataprocessing.GBXmlReader;
+import com.dankook.bsi.views.dataprocessing.HvacRead;
 import com.dankook.bsi.views.dataprocessing.ReadHVAC;
 
 public class Ui_Model {
@@ -17,7 +18,8 @@ public class Ui_Model {
 	private LoadGbXml_Panel gbxmlPanel;
 	private LoadHVAC_Panel hvacPanel;
 	private ReadHVAC readHVAC;
-	
+	private HvacRead hvacRead;
+
 	private static String gbxmlFilePath = "";
 	private static String BIXFilePath = "";
 	private static String HVACFilePath = "";
@@ -55,17 +57,34 @@ public class Ui_Model {
 	public void setHvacPanel(LoadHVAC_Panel hvacPanel) {
 		this.hvacPanel = hvacPanel;
 	}
+	
+
+	public HvacRead getHvacRead() {
+		return hvacRead;
+	}
+
+	public void setHvacRead(HvacRead hvacRead) {
+		this.hvacRead = hvacRead;
+	}
 
 	public String getGbxmlFileDesc() {
 		return "GreenBuild File Format (.xml)";
 	}
 	
-	public String getHVACFileExtention() {
+	public String getHVACFileExtentionXlsx() {
 		return "xlsx";
 	}
 
-	public String getHVACFileDesc() {
+	public String getHVACFileDescXlsx() {
 		return "HVAC imformation Excel File (.xlsx)";
+	}
+	
+	public String getHVACFileExtentionXls() {
+		return "xls";
+	}
+	
+	public String getHVACFileDescXls() {
+		return "HVAC imformation Excel File (.xls)";
 	}
 
 	public void openGbxmlFile(String filePath) throws GBXmlValidationError {
@@ -90,7 +109,8 @@ public class Ui_Model {
 			info.setHVACFilePath(filePath);
 			readHVAC = new ReadHVAC(this);
 			check = readHVAC.ExcelRead();
-			info.printHVAC();
+			//info.printHVAC();
+			info.printHVACTest();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

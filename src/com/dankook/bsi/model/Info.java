@@ -418,6 +418,23 @@ public class Info {
 		System.out.println("\t조명밀도 : " + LightingDensity);
 	}
 	
+	
+public void printHVACTest() {
+		
+		System.out.println("난방기기");
+		System.out.println("\t기기방식 : " + HeatingSystemType.name());
+		System.out.println("\t용량 : " + getHeatingVolumn());
+		System.out.println("\t효율 : " + getHeatingEfficiency());
+		System.out.println("급탕기기");
+		System.out.println("\t기기방식 : " + HeatingPumpSystemType.name());
+		System.out.println("\t용량 : " + HeatingPumpVolumn);
+		System.out.println("\t효율 : " + HeatingPumpEfficiency);
+		System.out.println("냉방기기");
+		System.out.println("\t기기방식 : " + CoolingSystemType.name());
+		System.out.println("\t용량 : " + getCoolingVolumn());
+		System.out.println("\t효율 : " + getCoolingEfficiency());
+	}
+	
 	public static String[] parseString(String[] str, double[] array) {
 		
 		String[] strArray = new String[str.length+array.length-1];

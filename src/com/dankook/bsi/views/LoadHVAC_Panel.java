@@ -79,9 +79,16 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 
 	protected void loadFile() throws HVACValidationError {
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileFilter(new FileNameExtensionFilter(this._model.getHVACFileDesc(),
-				new String[] { this._model.getHVACFileExtention() }));
+		JFileChooser xlsFileChooser = new JFileChooser();
+		
+		fileChooser.setFileFilter(new FileNameExtensionFilter(this._model.getHVACFileDescXlsx(),
+				new String[] { this._model.getHVACFileExtentionXlsx() }));
 		fileChooser.setMultiSelectionEnabled(false);
+		
+		xlsFileChooser.setFileFilter(new FileNameExtensionFilter(this._model.getHVACFileDescXls(),
+				new String[] { this._model.getHVACFileExtentionXls() }));
+		xlsFileChooser.setMultiSelectionEnabled(false);
+		
 		if (fileChooser.showOpenDialog(this) == 0) {
 			String HVACFilePath = fileChooser.getSelectedFile().toString();
 			_model.setHVACFilePath(HVACFilePath);
@@ -90,6 +97,22 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 				if (HVACFilePath.isEmpty()) return;
 				_model.setHVACInfo();
 				boolean check = _model.openHVACFile(HVACFilePath);
+				if(check) update();
+				
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "An Error has occured during load file!!", "FileLoadError", 0);
+
+				e.printStackTrace();
+			}
+		}
+		
+		if(xlsFileChooser.showOpenDialog(this) == 0) {
+			String HVACFilePathXls = xlsFileChooser.getSelectedFile().toString();
+			_model.setHVACFilePath(HVACFilePathXls);
+			try {
+				if (HVACFilePathXls.isEmpty()) return;
+				_model.setHVACInfo();
+				boolean check = _model.openHVACFile(HVACFilePathXls);
 				if(check) update();
 				
 			} catch (Exception e) {

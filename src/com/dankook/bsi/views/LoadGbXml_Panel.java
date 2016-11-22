@@ -64,16 +64,17 @@ public class LoadGbXml_Panel extends JPanel implements Ui_Observer {
 					// convertBIXcheck가 true일 때
 				LoadGbXml_Panel.this.loadFile();
 				
-					if (_model.getIsConvertBIX()) {
+					//if (_model.getIsConvertBIX()) {
 						//_model.getHvacPanel().get_loadFileBtn().setEnabled(true);
 						
-					}
+					//}
 					/*
 					else
 						_model.getHvacPanel().get_loadFileBtn().setEnabled(false);
 						*/
 					//convertBIXcheck이 static으로 돼있기 때문에 이러한 성질을 이용하면 될 것 같다.
 			}
+			
 		});
 		this._loadFileBtn.setBounds(600, 53, 45, 25);
 		add(this._loadFileBtn);
