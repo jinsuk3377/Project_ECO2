@@ -1,33 +1,52 @@
 package com.dankook.bsi.model;
 
+import java.util.Vector;
+
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.dankook.bsi.exception.*;
+import com.dankook.bsi.util.Ui_Observer;
+import com.dankook.bsi.util.IDF.IDF;
 import com.dankook.bsi.util.greenbuilding.GBXmlContext;
 import com.dankook.bsi.views.*;
 import com.dankook.bsi.views.dataprocessing.GBXmlReader;
-import com.dankook.bsi.views.dataprocessing.HvacRead;
 import com.dankook.bsi.views.dataprocessing.ReadHVAC;
 
-public class Ui_Model {
+import com.dankook.bsi.util.IDF.GBXmlToIdfConverter;
+
+import com.dankook.bsi.util.Ui_Observer;
+
+public class Ui_Model implements Ui_Observer {
+	
+	private Vector<Ui_Observer> _views = new Vector();
 	private GBXmlContext gbxml;
 	private Info info = null;
-
+	private IDF idf;
+	
 	private MainPanel mainPanel;
-	private LoadGbXml_Panel gbxmlPanel;
-	private LoadHVAC_Panel hvacPanel;
 	private ReadHVAC readHVAC;
-	private HvacRead hvacRead;
 
 	private static String gbxmlFilePath = "";
 	private static String BIXFilePath = "";
 	private static String HVACFilePath = "";
-	private static boolean isConvertBIX = false;
+	private static int isConvertBIX = 0;
+	private static int isImportHVAC = 0;
 	
 	public Ui_Model() {
 		this.gbxml = null;
 		this.info = null;
+	}
+	
+	public void addObserver(Ui_Observer view) {
+		this._views.add(view);
+	}
+	
+	public void notifyAllToAllViews() {
+		for (Ui_Observer view : this._views)
+		{
+			view.update(this);
+		}
 	}
 	
 	public String getGbxmlFileExtention() {
@@ -42,29 +61,12 @@ public class Ui_Model {
 		this.mainPanel = mainPanel;
 	}
 
-	public LoadGbXml_Panel getGbxmlPanel() {
-		return gbxmlPanel;
+	public ReadHVAC getHvacRead() {
+		return readHVAC;
 	}
 
-	public void setGbxmlPanel(LoadGbXml_Panel gbxmlPanel) {
-		this.gbxmlPanel = gbxmlPanel;
-	}
-
-	public LoadHVAC_Panel getHvacPanel() {
-		return hvacPanel;
-	}
-
-	public void setHvacPanel(LoadHVAC_Panel hvacPanel) {
-		this.hvacPanel = hvacPanel;
-	}
-	
-
-	public HvacRead getHvacRead() {
-		return hvacRead;
-	}
-
-	public void setHvacRead(HvacRead hvacRead) {
-		this.hvacRead = hvacRead;
+	public void setHvacRead(ReadHVAC readHVAC) {
+		this.readHVAC = readHVAC;
 	}
 
 	public String getGbxmlFileDesc() {
@@ -89,11 +91,14 @@ public class Ui_Model {
 
 	public void openGbxmlFile(String filePath) throws GBXmlValidationError {
 		try {
+		
 			setGbxmlFilePath(filePath);
 			info.setGbxmlFilePath(filePath);
 			GBXmlReader _xmlReader = new GBXmlReader();
 			Document doc = _xmlReader.createDocumentFromFile(filePath);
 			this.gbxml = _xmlReader.createGBXmlContext(doc);
+			this.idf = new GBXmlToIdfConverter().convert(this.gbxml);
+			notifyAllToAllViews();
 		} catch (SAXException e) {
 			throw new GBXmlValidationError();
 		} catch (Exception e) {
@@ -111,6 +116,7 @@ public class Ui_Model {
 			check = readHVAC.ExcelRead();
 			//info.printHVAC();
 			info.printHVACTest();
+			notifyAllToAllViews();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -137,6 +143,15 @@ public class Ui_Model {
 		info.setValues();
 		info.printBIX();
 	}
+	
+	public IDF getIdf() {
+		return idf;
+	}
+
+	public void setIdf(IDF idf) {
+		this.idf = idf;
+		notifyAllToAllViews();
+	}	
 
 	public boolean loadedGbxmlFile() {
 		return !getGbxmlFilePath().equals("");
@@ -174,17 +189,26 @@ public class Ui_Model {
 		return Ui_Model.HVACFilePath;
 	}
 	
-	public void setIsConvertBIX(boolean convertBIXCheck) {
+	public static void setConvertBIX(int convertBIXCheck) {
 		Ui_Model.isConvertBIX = convertBIXCheck;
 	}
 	
-	public boolean getIsConvertBIX() {
+	public static int isConvertBIX() {
 		return Ui_Model.isConvertBIX;
 	}
 
-	public void update(Object paramObject) {
-		
-	}	
+	public static void setImportHVAC(int isImportHVAC) {
+		Ui_Model.isImportHVAC = isImportHVAC;
+	}
+	
+	public static int isImportHVAC() {
+		return isImportHVAC;
+	}
+
+	public void update(Object eventDispatcher) {
+
+		notifyAllToAllViews();
+	}
 
 
 }

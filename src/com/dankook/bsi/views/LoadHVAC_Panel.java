@@ -29,7 +29,7 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 
 	public LoadHVAC_Panel(Ui_Model model) {
 		_model = model;
-		
+		this._model.addObserver(this);
 		setToolTipText("HVAC 엑셀 파일을 업로드하여 설비 관련 데이터를 읽습니다.");
 		setLayout(null);
 		setBounds(10, 10, 770, 58);
@@ -55,7 +55,7 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					if (!_model.getIsConvertBIX()) JOptionPane.showMessageDialog(null, 
+					if (_model.isConvertBIX()==0) JOptionPane.showMessageDialog(null, 
 							"Press ... button in BIM Model Upload dialog and import your building information model file that gbXML format.", 
 							"Message: HVAC Model Upload", JOptionPane.INFORMATION_MESSAGE);
 					
@@ -85,9 +85,7 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 				new String[] { this._model.getHVACFileExtentionXlsx() }));
 		fileChooser.setMultiSelectionEnabled(false);
 		
-		xlsFileChooser.setFileFilter(new FileNameExtensionFilter(this._model.getHVACFileDescXls(),
-				new String[] { this._model.getHVACFileExtentionXls() }));
-		xlsFileChooser.setMultiSelectionEnabled(false);
+		
 		
 		if (fileChooser.showOpenDialog(this) == 0) {
 			String HVACFilePath = fileChooser.getSelectedFile().toString();
@@ -97,7 +95,10 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 				if (HVACFilePath.isEmpty()) return;
 				_model.setHVACInfo();
 				boolean check = _model.openHVACFile(HVACFilePath);
-				if(check) update();
+				if(check) refreshView();
+				
+				_model.setImportHVAC(1);
+				_model.notifyAllToAllViews();
 				
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "An Error has occured during load file!!", "FileLoadError", 0);
@@ -105,6 +106,10 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 				e.printStackTrace();
 			}
 		}
+		/*
+		xlsFileChooser.setFileFilter(new FileNameExtensionFilter(this._model.getHVACFileDescXls(),
+				new String[] { this._model.getHVACFileExtentionXls() }));
+		xlsFileChooser.setMultiSelectionEnabled(false);
 		
 		if(xlsFileChooser.showOpenDialog(this) == 0) {
 			String HVACFilePathXls = xlsFileChooser.getSelectedFile().toString();
@@ -113,7 +118,9 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 				if (HVACFilePathXls.isEmpty()) return;
 				_model.setHVACInfo();
 				boolean check = _model.openHVACFile(HVACFilePathXls);
-				if(check) update();
+				if(check) refreshView();
+				
+				_model.notifyAllToAllViews();
 				
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "An Error has occured during load file!!", "FileLoadError", 0);
@@ -121,6 +128,7 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 				e.printStackTrace();
 			}
 		}
+		*/
 	}
 	
 	public String getHVACFilePath() {
@@ -151,9 +159,13 @@ public class LoadHVAC_Panel extends JPanel implements Ui_Observer {
 		_loadFileBtn.setEnabled(enable);
 	}
 	
-	public void update() {
+	public void update(Object eventDispatcher) {
+		refreshView();
+	}
+	
+	public void refreshView() {
 		this.outputTextField.setText(this._model.getHVACFilePath());
-		if (_model.getIsConvertBIX())
+		if (_model.isConvertBIX()>0)
 			set_loadFileBtn(true);
 	}
 }

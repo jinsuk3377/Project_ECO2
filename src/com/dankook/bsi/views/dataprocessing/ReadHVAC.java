@@ -282,6 +282,12 @@ public class ReadHVAC {
 							if (valueOfDouble <= -0.0001 || valueOfDouble >= 0.0001) {
 								_model.getInfo().setCoolingVolumn(valueOfDouble);
 							}
+							
+							curCell = curSheet.getRow(rowindex).getCell(23);
+							valueOfDouble = (double) getCellValue(curCell);
+							
+							if (valueOfDouble <= -0.0001 || valueOfDouble >= 0.0001) 
+								_model.getInfo().setCoolingEfficiency(valueOfDouble);
 						}
 					}
 					check = true;

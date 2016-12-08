@@ -4646,8 +4646,7 @@
         </Construction>
         <Construction id="con-c23">
             <Name>Passive floor, no insulation, tile or vinyl</Name>
-            <Description>Passive floor, no insulation, tile or vinyl
-                [Source: CIBSE] </Description>
+            <Description>Passive floor, no insulation, tile or vinyl [Source: CIBSE] </Description>
             <U-value unit="WPerSquareMeterK">2.9582</U-value>
             <MaterialId materialIdRef="mat-AF14"/>
             <MaterialId materialIdRef="mat-842"/>
@@ -4709,8 +4708,7 @@
         </Material>
         <WindowType id="DGL-R-I">
             <Name>Large double-glazed windows (reflective coating) - industry</Name>
-            <Description>Large double-glazed windows (reflective
-                coating) - industry</Description>
+            <Description>Large double-glazed windows (reflective coating) - industry</Description>
             <U-value unit="WPerSquareMeterK">2.9214</U-value>
             <SolarHeatGainCoeff solarIncidentAngle="0" unit="Fraction">0.13</SolarHeatGainCoeff>
             <SolarHeatGainCoeff solarIncidentAngle="40" unit="Fraction">0.12</SolarHeatGainCoeff>

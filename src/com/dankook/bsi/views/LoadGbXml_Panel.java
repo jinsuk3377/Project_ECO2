@@ -38,7 +38,7 @@ public class LoadGbXml_Panel extends JPanel implements Ui_Observer {
 
 	public LoadGbXml_Panel(Ui_Model model) {
 		_model = model;
-		
+		this._model.addObserver(this);
 		setToolTipText("gbXml 파일을 가져와서 아래 단계에 그 값을 뿌려줍니다.");
 		setLayout(null);
 		setBounds(10, 10, 770, 58);
@@ -46,7 +46,7 @@ public class LoadGbXml_Panel extends JPanel implements Ui_Observer {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "BIM Model Upload", 4, 2, null,
 				new Color(0, 0, 255)));
 
-		JLabel leftLabel = new JLabel("GbXml Path");
+		JLabel leftLabel = new JLabel("gbXML Path");
 		leftLabel.setFont(new Font("Consolas", 0, 12));
 
 		leftLabel.setBounds(12, 21, 78, 25);
@@ -61,18 +61,7 @@ public class LoadGbXml_Panel extends JPanel implements Ui_Observer {
 		this._loadFileBtn = new JButton("...");
 		this._loadFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					// convertBIXcheck가 true일 때
 				LoadGbXml_Panel.this.loadFile();
-				
-					//if (_model.getIsConvertBIX()) {
-						//_model.getHvacPanel().get_loadFileBtn().setEnabled(true);
-						
-					//}
-					/*
-					else
-						_model.getHvacPanel().get_loadFileBtn().setEnabled(false);
-						*/
-					//convertBIXcheck이 static으로 돼있기 때문에 이러한 성질을 이용하면 될 것 같다.
 			}
 			
 		});
@@ -94,11 +83,13 @@ public class LoadGbXml_Panel extends JPanel implements Ui_Observer {
 			try {			
 				if (gbxmlFilePath.isEmpty()) return;
 				_model.setGbXMLInfo();
-				this._model.openGbxmlFile(gbxmlFilePath);
+				_model.openGbxmlFile(gbxmlFilePath);
 				
 				LoadGbXml_Panel.this.convertFile();
-				_model.setIsConvertBIX(true);
-				update();
+				
+				outputTextField.setText(this._model.getGbxmlFilePath());
+				_model.setConvertBIX(1);
+				_model.notifyAllToAllViews();
 				
 			} catch (GBXmlValidationError e) {
 				JOptionPane.showMessageDialog(null, "This file is not a valid File!! Check your File",
@@ -127,10 +118,12 @@ public class LoadGbXml_Panel extends JPanel implements Ui_Observer {
 	public String getGbxmlFilePath() {
 		return gbxmlFilePath;
 	}
-
-	public void update() {
+	
+	public void update(Object eventDispatcher) {
+		refreshView();
+	}
+	
+	public void refreshView() {
 		this.outputTextField.setText(this._model.getGbxmlFilePath());
-		_model.getHvacPanel().update();
-		_model.getMainPanel().update();
 	}
 }

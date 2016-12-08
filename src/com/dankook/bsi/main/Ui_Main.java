@@ -15,7 +15,7 @@ import com.dankook.bsi.util.Ui_Observer;
 import com.dankook.bsi.views.*;
 import com.opencsv.CSVWriter;
 
-public class Ui_Main extends JFrame implements Ui_Observer {
+public class Ui_Main extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private Ui_Model _model;
@@ -30,8 +30,7 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 					Ui_Main frame = new Ui_Main();
 					frame.setTitle("ECO2 Simulator");
 					frame.setDefaultCloseOperation(3);
-					//frame.setSize(700, 900);
-					frame.setSize(700, 340);
+					frame.setSize(700, 850);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,12 +62,6 @@ public class Ui_Main extends JFrame implements Ui_Observer {
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("About");
 		mnhelp.add(mntmNewMenuItem);
-		
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
 		
 	}
 }

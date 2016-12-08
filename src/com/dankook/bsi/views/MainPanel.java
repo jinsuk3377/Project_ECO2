@@ -1,37 +1,39 @@
 package com.dankook.bsi.views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.xml.sax.SAXException;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 import com.dankook.bsi.util.geometry.*;
-import com.dankook.bsi.main.Ui_Main;
+
 import com.dankook.bsi.model.*;
 import com.dankook.bsi.simulation.CsvWriter;
 import com.dankook.bsi.util.Ui_Observer;
-import com.dankook.bsi.views.dataprocessing.*;
 
 public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoadGbXml_Panel loadGbXmlPanel;
 	private LoadHVAC_Panel loadHVACPanel;
-	// private InfoGbXml_Panel infoGbXmlPanel;
+	private ModelViewPanel modelViewPanel;
+	private InfoGbXml_Panel infoGbXmlPanel;
 	private BarChartFrame barchartFrame;
 	private CsvWriter csvWriter;
+	
+	private JScrollPane infoGbXmlJScrollPane;
 
 	public final JButton simulationButton = new JButton("Simulation");
 
@@ -39,13 +41,16 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 	public MainPanel(Ui_Model model) throws IOException {
 		this._model = model;
+		this._model.addObserver(this);
 		csvWriter = new CsvWriter(_model);
 		createGbXmlPanel();
+		createModelViewPanel();
+		createInfoGbXmlPanel();
 		createHVACPanel();
 		createSimulationButton();
 
 		setLayout(null);
-		setSize(800, 340);
+		setSize(700, 850);
 
 		refreshView();
 	}
@@ -55,44 +60,54 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 		loadGbXmlPanel.setSize(660, 95);
 		loadGbXmlPanel.setToolTipText("");
 		loadGbXmlPanel.setModel(_model);
-		loadGbXmlPanel.setLocation(10, 35);
+		loadGbXmlPanel.setLocation(10, 25);
 		add(loadGbXmlPanel);
-		_model.setGbxmlPanel(loadGbXmlPanel);
 	}
-
+	
 	private void createHVACPanel() {
 		loadHVACPanel = new LoadHVAC_Panel(_model);
 		loadHVACPanel.setSize(660, 95);
 		loadHVACPanel.setToolTipText("");
 		loadHVACPanel.setModel(_model);
-		loadHVACPanel.setLocation(10, 135);
+		loadHVACPanel.setLocation(10, 120);
 		add(loadHVACPanel);
-		_model.setHvacPanel(loadHVACPanel);
 	}
-	/*
-	 * private void createInfoGbXmlPanel() { infoGbXmlPanel = new
-	 * InfoGbXml_Panel(_model); infoGbXmlPanel.setSize(660, 660);
-	 * infoGbXmlPanel.setToolTipText(""); infoGbXmlPanel.setModel(_model);
-	 * infoGbXmlPanel.setLocation(10, 150); add(infoGbXmlPanel); }
-	 */
 
+	private void createModelViewPanel() {
+		modelViewPanel = new ModelViewPanel(_model);
+		modelViewPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Model View", 4, 2, null,
+				new Color(0, 0, 255)));
+		modelViewPanel.setBounds(10, 215, 660, 290);
+		add(modelViewPanel);
+	}
+
+	private void createInfoGbXmlPanel() {
+		infoGbXmlPanel = new InfoGbXml_Panel(_model);
+		infoGbXmlPanel.setPreferredSize(new Dimension(650, 410));
+		infoGbXmlPanel.setToolTipText("");
+		infoGbXmlPanel.setModel(_model);
+		
+		infoGbXmlJScrollPane = new JScrollPane(infoGbXmlPanel,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		infoGbXmlJScrollPane.setBounds(10, 505, 660, 250);
+		infoGbXmlJScrollPane.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "BIM Information", 4, 2, null,
+				new Color(0, 0, 255)));
+		
+		add(infoGbXmlJScrollPane, BorderLayout.CENTER);
+	}
+	
 	private void createSimulationButton() {
 		simulationButton.setForeground(SystemColor.desktop);
 		simulationButton.setFont(new Font("Consolas", 0, 13));
-		simulationButton.setBounds(535, 250, 132, 28);
+		simulationButton.setBounds(535, 770, 132, 28);
 		simulationButton.addActionListener(this);
 		add(simulationButton);
 		simulationButton.setEnabled(false);
 	}
 
-	private void refreshView() {
-		if (this._model != null) {
-			updateSimulationButton();
-		}
-	}
-
 	private void updateSimulationButton() {
-		if (_model.getIsConvertBIX())
+		if (_model.isConvertBIX()>0)
 			simulationButton.setEnabled(true);
 	}
 
@@ -101,7 +116,7 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 		if (e.getSource() == this.simulationButton) {
 
-			if (!_model.getIsConvertBIX())
+			if (_model.isConvertBIX()==0)
 				JOptionPane.showMessageDialog(null,
 						"Press ... button in BIM Model Upload dialog and import your building information model file that gbXML format.",
 						"Message: Simulation", JOptionPane.INFORMATION_MESSAGE);
@@ -135,8 +150,14 @@ public class MainPanel extends JPanel implements Ui_Observer, ActionListener {
 
 		}
 	}
-	
-	public void update() {
+
+	public void refreshView() {
+		if (this._model != null) {
+			updateSimulationButton();
+		}
+	}
+
+	public void update(Object eventDispatcher) {
 		refreshView();
 	}
 }
